@@ -1,0 +1,15 @@
+# Downloaded data and the generated database are not committed (see README).
+data/raw/
+data/*.db
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# Editors / OS
+.DS_Store
+.vscode/
+.idea/

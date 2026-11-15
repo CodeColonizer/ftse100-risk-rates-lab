@@ -1,0 +1,33 @@
+check,severity,status,rows_flagged,description,examples
+prices_unique_ticker_date,error,pass,0,One clean price per ticker and day,
+prices_no_null_keys,error,pass,0,"Ticker, date and adjusted close are never missing",
+prices_positive,error,pass,0,Prices are strictly positive,
+prices_high_low_consistent,warning,review,1,Daily low is not above the daily high,"SDLF.L, 2010-05-17, GBp, 510.5639953613281, 510.5639953613281, 510.590087890625, 497.69110107421875, 491.6910095214844, 1341.0, 0, 0, 0, 0"
+prices_no_weekends,error,pass,0,No prices on Saturdays or Sundays,
+prices_no_future_dates,error,pass,0,No prices dated after today,
+prices_start_on_or_after_start_date,error,pass,0,No prices before the analysis start (2010-01-01),
+prices_on_calendar,error,pass,0,Every price date is an index trading day,
+prices_no_unit_shifts,error,pass,0,No unexplained ~100x price level changes (pence/pound unit errors),
+prices_extreme_moves_reported,warning,review,24,One-day moves above 25% (kept; listed for review),"AAF.L, 2020-03-20, 38.159332275390625; ADM.L, 2011-11-09, 879.2173461914062; BAB.L, 2021-04-13, 319.31964111328125; BGEO.L, 2018-05-29, 1856.5748291015625; BNZL.L, 2025-04-16, 2288.6171875"
+prices_stale_days_reported,warning,review,205,Zero-volume days with an unchanged close (kept; listed for review),"ABDN.L, 2017-07-11; ABF.L, 2017-07-11; ADM.L, 2017-07-11; AUTO.L, 2017-07-11; AZN.L, 2017-07-11"
+prices_rows_accounted_for,error,pass,0,Every raw row on a trading day is either in the clean layer or logged as excluded,
+prices_fx_available,error,pass,0,Every USD/EUR-quoted price has an exchange rate from within the previous 5 days,
+prices_corrections_applied,error,pass,0,Every documented correction in price_corrections.csv changed at least one row,
+prices_exclusions_reported,warning,review,1137,Rows removed from the clean layer (listed with reasons in clean_price_exclusions),"ADM.L, 2010-02-04, flat-bar bad print: large move with open = high = low = close, reversed next day; BGEO.L, 2010-01-04, before usable history (see price_corrections.csv): Before its February 2012 premium listing the London line traded in a different unit (depositary receipts) and 2011 has only 29 days of data; BGEO.L, 2010-01-05, before usable history (see price_corrections.csv): Before its February 2012 premium listing the London line traded in a different unit (depositary receipts) and 2011 has only 29 days of data; BGEO.L, 2010-01-06, before usable history (see price_corrections.csv): Before its February 2012 premium listing the London line traded in a different unit (depositary receipts) and 2011 has only 29 days of data; BGEO.L, 2010-01-07, before usable history (see price_corrections.csv): Before its February 2012 premium listing the London line traded in a different unit (depositary receipts) and 2011 has only 29 days of data"
+index_covers_start,error,pass,0,FTSE 100 index history starts in the first week of the window,
+index_is_recent,warning,pass,0,FTSE 100 index data is no more than 7 days old,
+constituents_count,error,pass,0,Between 98 and 102 constituents,
+constituents_unique,error,pass,0,Each ticker and ISIN appears once,
+constituents_have_sector,error,pass,0,Every constituent has a valid ICB sector and industry,
+constituents_have_prices,error,pass,0,Every constituent has price data,
+constituents_prices_recent,error,pass,0,Every constituent's latest price is within 7 days of the index's latest date,
+constituents_missing_days,error,pass,0,No stock misses more than 2% of trading days after it starts,
+constituents_late_starters_reported,warning,review,14,Stocks whose price history starts after January 2010 (listed later; reported),"GLEN.L, Glencore, 2011-05-19; BGEO.L, Lion Finance Group, 2012-02-28; CCH.L, Coca-Cola HBC, 2013-04-29; BBOX.L, Tritax Big Box REIT, 2013-12-09; AUTO.L, Autotrader Group, 2015-03-19"
+boe_dates_unique,error,pass,0,One decision per date,
+boe_decision_matches_rates,error,pass,0,Decision label (hike/cut/hold) agrees with old and new rate,
+boe_chain_consistent,error,pass,0,Each decision's old rate equals the previous decision's new rate,
+boe_matches_official_series,error,pass,0,New rate equals the official daily Bank Rate (IUDBEDR) on the decision date,
+boe_series_changes_are_decisions,error,pass,0,Every change in the daily Bank Rate series falls on an MPC decision date,
+boe_rates_in_range,error,pass,0,Bank Rate between 0% and 6% throughout,
+boe_event_on_trading_day,error,pass,0,"Every decision maps to a trading day within 3 days (except the latest, if not yet traded)",
+bank_rate_daily_complete,error,pass,0,Bank Rate known on every trading day,

@@ -1,0 +1,4 @@
+ticker,action,before_date,factor,reason,evidence
+PCT.L,scale_before,2013-01-02,0.1,"Yahoo did not apply the September 2024 10-for-1 share split to prices before 2 January 2013","Adjusted price falls 89.7% overnight on 2 Jan 2013 while volume rises about 100-fold; Yahoo's split record shows a 10:1 split on 13 Sep 2024"
+BGEO.L,drop_before,2012-02-28,,"Before its February 2012 premium listing the London line traded in a different unit (depositary receipts) and 2011 has only 29 days of data","Adjusted price jumps 55x on 28 Feb 2012 and stays at the new level"
+EDV.L,drop_before,2021-06-14,,"Before its June 2021 London premium listing the line was barely traded: 619 of 851 days had zero volume","Price falls 42% on 14 Jun 2021, the first day of regular trading volume"
