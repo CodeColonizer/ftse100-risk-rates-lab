@@ -8,6 +8,9 @@ This project answers those questions with 17 years of daily data for today's
 FTSE 100 companies and every Bank of England Bank Rate decision since 2010.
 It describes what happened; it makes no price predictions.
 
+**Interactive app:** _link added after deployment_ · refreshed every weekday by
+GitHub Actions.
+
 ## Project status
 
 | Phase | Scope | Status |
@@ -15,7 +18,7 @@ It describes what happened; it makes no price predictions.
 | 1 | Data pipeline and data quality | ✅ Complete ([findings](docs/phase1_findings.md)) |
 | 2 | Risk analytics: volatility, drawdown, beta, Sharpe, sector correlations, stress periods | ✅ Complete ([findings](docs/phase2_findings.md)) |
 | 3 | Event study of Bank Rate decisions | ✅ Complete ([findings](docs/phase3_findings.md)) |
-| 4 | Daily automated refresh and a Streamlit app | Planned |
+| 4 | Daily automated refresh and a Streamlit app | ✅ Complete ([notes](docs/phase4_findings.md)) |
 
 ## Headline findings so far
 
@@ -138,7 +141,18 @@ Table and column definitions: [`docs/data_dictionary.md`](docs/data_dictionary.m
   tests; a test of whether moves are bigger than usual in either direction;
   a check of how often each test gives false alarms on placebo days.
 
-Results tables: [`outputs/tables/`](outputs/tables/).
+### Phase 4: daily refresh and app
+
+- **GitHub Actions** reruns the whole pipeline every weekday at 18:30 UTC and
+  on code changes, runs all tests, and publishes the app with its new data to
+  the `streamlit-app` branch only if every check and test passes.
+- **Streamlit app** (`app/streamlit_app.py`) with six tabs: overview, sector
+  risk, diversification, stress periods, Bank Rate decisions, and data and
+  method. It reads summary tables only (no raw prices), and every number in
+  its text is calculated from the data.
+
+Results tables: [`outputs/tables/`](outputs/tables/). The findings pages in
+`docs/` describe the data as of 15 November 2026; the app shows the latest.
 
 Each decision, and why, is in [`docs/decisions.md`](docs/decisions.md).
 
@@ -180,9 +194,15 @@ pytest
 
 `run_pipeline.py` downloads all data (one to two minutes), builds
 `data/ftse_lab.db`, runs the quality checks, calculates the risk analytics and
-the event study, and saves charts to `outputs/figures/` and tables to `outputs/tables/`. If a
+the event study, writes the app's data to `app/data/`, and saves charts to `outputs/figures/` and tables to `outputs/tables/`. If a
 required data quality check fails, it stops before the analytics and exits
 with an error.
+
+To open the app locally after running the pipeline:
+
+```bash
+streamlit run app/streamlit_app.py
+```
 
 Options:
 - `python run_pipeline.py --offline` rebuilds from the cached downloads in `data/raw/`.
@@ -192,6 +212,8 @@ Options:
 
 ```
 run_pipeline.py        one command to run everything
+app/                   Streamlit app (its data in app/data/ is generated, not committed)
+.github/workflows/     daily refresh and test workflows
 src/ftselab/           download, database, quality checks, risk, event study and charts
 sql/clean/             clean-layer SQL
 data/reference/        small committed reference files and their sources

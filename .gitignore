@@ -2,6 +2,9 @@
 data/raw/
 data/*.db
 
+# App data is generated daily and published to the streamlit-app branch
+app/data/
+
 # Python
 __pycache__/
 *.pyc

@@ -1,0 +1,86 @@
+# Daily refresh: download fresh data, rebuild everything, test it, and publish
+# the Streamlit app with its data to the `streamlit-app` branch.
+#
+# Safety rule: the app is only updated if the whole pipeline succeeds (every
+# required data quality check passes) AND every test passes. If anything
+# fails, the live app keeps showing the last good data and the run is marked
+# failed so the problem is visible in the Actions tab.
+name: Daily data refresh
+
+on:
+  schedule:
+    - cron: "30 18 * * 1-5"   # 18:30 UTC, Monday to Friday, after the London close
+  workflow_dispatch:           # run by hand from the Actions tab
+  push:
+    branches: [main]
+    paths:                     # code changes that affect the app or its data
+      - "app/**"
+      - "src/**"
+      - "sql/**"
+      - "run_pipeline.py"
+      - "requirements.txt"
+      - "data/reference/**"
+      - ".github/workflows/daily-refresh.yml"
+
+permissions:
+  contents: write              # needed to push the streamlit-app branch
+
+concurrency:
+  group: daily-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.15"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run the full pipeline (download, clean, check, analyse, export app data)
+        run: python run_pipeline.py
+
+      - name: Run all tests (unit tests and checks on the freshly built data)
+        run: pytest -q
+
+      - name: Publish the app and its data to the streamlit-app branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          through=$(python -c "import json; print(json.load(open('app/data/meta.json'))['data_through'])")
+          deploy=$(mktemp -d)
+          cp -r app/. "$deploy"/
+          cat > "$deploy/README.md" <<EOF
+          # streamlit-app (generated branch)
+
+          Built automatically by the "Daily data refresh" workflow from \`main\`
+          commit ${GITHUB_SHA}. Data through ${through}.
+          Do not edit this branch: it is replaced on every run. Edit \`app/\` on \`main\`.
+          EOF
+          cd "$deploy"
+          git init -q -b streamlit-app
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "App data refresh: data through ${through}"
+          git push -q -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" streamlit-app
+          echo "Published app data through ${through}" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Keep the run's charts, tables and quality report for 14 days
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: outputs-${{ github.run_number }}
+          path: |
+            outputs/
+            app/data/
+          retention-days: 14
+          if-no-files-found: ignore

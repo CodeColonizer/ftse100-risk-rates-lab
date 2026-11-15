@@ -242,3 +242,45 @@ results use the 7 scheduled cuts; a separate group includes all 9.
 market-implied rate expectations (e.g. overnight index swaps), which are not
 freely available as a clean daily series. This is the main limitation and the
 natural next step.
+
+## Phase 4: daily refresh and app (November 2026)
+
+**35. Publish the app and its data to a generated `streamlit-app` branch.**
+Why: committing data every weekday to `main` would bury real changes under
+daily bot commits. The workflow builds the app with fresh data and
+force-pushes it to a separate branch, which Streamlit Community Cloud deploys
+from. `main` holds only code and docs; the generated branch is replaced on
+every run and should never be edited.
+
+**36. Publish only if everything passes.**
+Why: an app that silently shows broken data is worse than one that is a day
+old. Downloads, all required data quality checks and all tests must succeed
+before anything is published; otherwise the live app keeps the last good data
+and the failed run is visible in the Actions tab.
+
+**37. The app reads summary tables, not raw prices.**
+Why: the project rule is not to publish raw price data, and the app does not
+need it. It reads risk metrics, weekly sector growth indices (sector level,
+derived), correlations and test results: 0.9 MB in total. A test enforces
+that no published table has price columns.
+
+**38. Every number in the app's text is calculated, not typed.**
+Why: the data changes daily. Sentences such as "the two riskiest sectors"
+are written from the current tables, so they cannot go stale. The findings
+pages in `docs/` are dated snapshots and say so.
+
+**39. Schedule: weekdays at 18:30 UTC.**
+Why: after the London close (16:30 UK time in both GMT and BST) and after
+Yahoo has published the day's closing prices. Also runs on any push to `main`
+that changes code or reference data, so code changes reach the app at once.
+
+**40. Altair charts inside Streamlit.**
+Why: Altair ships with Streamlit, gives tooltips and follows the viewer's
+light or dark theme, so no extra charting dependency is needed. Static
+matplotlib charts remain for the README and findings pages.
+
+**41. Separate, lighter requirements for the app.**
+Why: the deployed app only needs Streamlit, pandas and Altair
+(`app/requirements.txt`), so it installs quickly and is not tied to the
+analysis environment's exact versions. The pipeline uses the pinned
+`requirements.txt`.

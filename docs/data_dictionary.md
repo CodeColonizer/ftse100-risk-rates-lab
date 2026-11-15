@@ -107,3 +107,20 @@ Built by `src/ftselab/events.py`. Abnormal returns are fractions (0.01 = 1%).
 | `mart_event_placebo_examples` | placebo distributions for the three tests in the placebo chart |
 
 Small tables are also saved as CSVs in `outputs/tables/` (`event_*.csv`).
+
+## App data (Phase 4)
+
+Written by `src/ftselab/app_data.py` to `app/data/` (not committed to `main`;
+published daily to the `streamlit-app` branch). Summary tables only: no raw
+prices.
+
+| File | Contents |
+|---|---|
+| `meta.json` | data date, build time, counts, Bank Rate now, last decision, quality summary |
+| `sector_risk.csv`, `stock_risk.csv` | risk metrics (from the `mart_` tables) |
+| `sector_growth.csv` | growth of 100 per sector, the equal-weighted market and the FTSE 100, weekly |
+| `sector_correlation.csv`, `rolling_corr.csv` | correlations (rolling sampled weekly) |
+| `stress_periods.csv`, `stress_definitions.csv` | stress-period results and definitions |
+| `event_results.csv`, `event_stock_results.csv`, `event_volatility.csv`, `event_path.csv` | event-study results |
+| `boe_decisions.csv` | Bank Rate decisions, with whether each is in the event study |
+| `quality_report.csv` | the latest data quality report |
