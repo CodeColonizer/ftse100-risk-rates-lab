@@ -56,7 +56,38 @@ BAD_PRINT_MOVE = 0.15
 # ...and the next day brings the price back to within this distance of the
 # level before the spike. Genuine volatile days have a real intraday range.
 BAD_PRINT_REVERSAL = 0.05
+# If at least this many stocks show zero volume and an unchanged close on the
+# same day, the source has carried prices forward: those rows are removed.
+STALE_DAY_MIN_STOCKS = 10
 # Maximum share of index trading days a stock may be missing after it starts.
 MAX_MISSING_SHARE = 0.02
 # Expected range for the number of current constituents.
 MIN_CONSTITUENTS, MAX_CONSTITUENTS = 98, 102
+
+# --- Phase 2: risk analytics ----------------------------------------------------------
+TRADING_DAYS = 252           # used to annualise daily figures
+ROLLING_WINDOW = 252         # one trading year for rolling correlations
+ROLLING_MIN_PERIODS = 200    # require most of the year to be present
+MIN_HISTORY_YEARS = 3        # stocks with less history are marked short_history
+
+# Stress periods: returns run from the close on base_date to the close on end_date.
+STRESS_PERIODS = [
+    {
+        "period": "covid_crash", "label": "Covid crash",
+        "base_date": "2020-02-19", "end_date": "2020-03-23",
+        "why": "From the last close before the global sell-off accelerated "
+               "(19 Feb 2020) to the FTSE 100's lowest close of 2020 (23 Mar 2020).",
+    },
+    {
+        "period": "hikes_2022", "label": "2022 rate hikes",
+        "base_date": "2021-12-31", "end_date": "2022-12-30",
+        "why": "Calendar year 2022, in which the MPC raised Bank Rate at 8 meetings, "
+               "from 0.25% to 3.5%.",
+    },
+    {
+        "period": "mini_budget", "label": "Sept 2022 mini-budget",
+        "base_date": "2022-09-22", "end_date": "2022-10-14",
+        "why": "From the close before the 23 Sep 2022 fiscal statement to 14 Oct 2022, "
+               "when the Chancellor was replaced and the Bank's emergency gilt buying ended.",
+    },
+]

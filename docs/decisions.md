@@ -59,7 +59,8 @@ convert at the latest daily GBP/USD or GBP/EUR rate on or before each day.
 **9. No forward-filling of missing prices.**
 Why: filling a gap with yesterday's price invents a 0% return, which
 understates volatility and distorts correlations. Missing days stay missing
-and are counted (26 across all stocks).
+and are counted (26 across all stocks in the source data; 67 after the
+carried-forward rows in decision 24 are also treated as missing).
 
 **10. Remove a price only for a clear, documented reason; otherwise flag it.**
 - *Removed*: (a) one-day ~100x jumps that reverse (pence/pound glitches; none
@@ -67,7 +68,8 @@ and are counted (26 across all stocks).
   over 15%, and the next day back within 5% (5 rows, all in early 2010),
   (c) history before a documented usable date (see 11).
 - *Flagged and kept*: one-day moves over 25% (24 rows, mostly genuine, e.g.
-  Covid crash, vaccine news on 9 Nov 2020), zero-volume unchanged days.
+  Covid crash, vaccine news on 9 Nov 2020), zero-volume unchanged days
+  (unless many stocks show one on the same day: see decision 24).
 Why: genuine extreme days are exactly what risk analysis is about, so they
 must not be "cleaned away". The flat-bar rule separates bad prints from real
 volatility: real volatile days have a real intraday range.
@@ -89,3 +91,70 @@ are "error" (pipeline fails) or "warning" (reported for review).
 Why: the Python 3.12 registered on this machine points to a broken Anaconda
 install; 3.15 works and is what my previous project uses. Phase 4 must check
 which Python versions Streamlit Community Cloud offers and pin a compatible one.
+
+## Phase 2: risk analytics (November 2026)
+
+**14. Simple daily returns, no bridging of gaps.**
+Why: simple returns average correctly across stocks, which is how the sector
+portfolios are built. A return is only calculated between two consecutive
+trading days, so a missing day never produces a two-day return disguised as
+one day. Each of the 67 missing stock-days (including 41 removed carried-forward
+prices) and 5 removed bad prints costs one or two
+returns, out of about 400,000.
+
+**15. Bank Rate on each day as the risk-free rate.**
+Why: Bank Rate ranged from 0.1% to 5.25%. A single average would flatter
+Sharpe ratios after 2022 and penalise them before. Bank Rate is the UK policy
+rate and the cleanest free daily series; a 3-month gilt yield would be an
+alternative.
+
+**16. Equal-weighted sector portfolios, rebalanced daily.**
+Why: shares-in-issue history is not freely available, so market-cap weights
+cannot be built reliably. Equal weighting answers "what does a typical stock
+in this sector do?" rather than "what do the sector's giants do?". The
+difference is visible in 2022, when the index rose 0.9% but the
+equal-weighted portfolio fell 7.5%.
+
+**17. Sectors use all members available on each day.**
+Why: dropping late joiners would leave Health Care, Energy and Telecoms with
+two or three stocks. A robustness check rebuilds sectors from the 86
+full-history stocks only; volatility changes by at most 0.8 points.
+
+**18. Investment trusts kept in Financials, with an alternative row.**
+Why: they are genuine FTSE 100 members, but they hold diversified portfolios
+rather than run a financial business. The sector table includes
+"Financials excl. investment trusts" so the difference can be seen.
+
+**19. Beta and correlation against the FTSE 100 price index.**
+Why: it is the benchmark people quote. Dividends barely affect daily
+co-movement, so beta and correlation are reliable; the index's return and
+Sharpe ratio are understated, and this is stated wherever they appear.
+
+**20. Fixed, dated stress windows chosen in advance from public events.**
+Why: choosing windows by searching the data for the worst days would
+exaggerate results. Each window is defined in `config.py` with a one-line
+reason: Covid crash (19 Feb to 23 Mar 2020), 2022 rate hikes (calendar 2022),
+mini-budget (22 Sep to 14 Oct 2022). Windows run close to close.
+
+**21. One-year (252-day) rolling correlations, at least 200 days of data.**
+Why: one year is long enough to be stable and short enough to show regime
+changes such as Energy decoupling in 2026.
+
+**22. Flagged days kept in the headline results, tested separately.**
+Why: Phase 1 kept 24 large moves because most are genuine. The robustness
+table shows the effect of removing them (average change of 1.3 volatility
+points for the 20 stocks affected), so the choice is visible, not hidden.
+
+**23. Results stored as `mart_` tables plus small CSVs.**
+Why: Phase 3 and the Phase 4 app can read the same tables, and reviewers can
+open the CSVs on GitHub without running anything.
+
+**24. Remove prices carried forward on a market-wide stale day (a Phase 1 fix
+found during Phase 2).**
+On 11 July 2017, 41 stocks show zero volume and exactly the previous close,
+while the index moved −0.5%. The source had no data that day and repeated
+yesterday's price, which would create false 0% returns, the same problem as
+forward-filling (decision 9). Rule: if 10 or more stocks are stale on the same
+day, those stale rows are removed and logged; a single illiquid stock with a
+quiet day is still kept. A required check now fails if such a day reappears.
+Effect on results: no sector figure changes by more than 0.01.

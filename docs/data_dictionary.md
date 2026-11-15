@@ -61,3 +61,21 @@ n_missing_days (trading days between first and last price with no price).
 
 ### `clean_bank_rate_daily`
 date, bank_rate_pct: Bank Rate in force on each trading day.
+
+## Analytics layer (Phase 2)
+
+Built by `src/ftselab/risk.py`. All returns are fractions (0.05 = 5%).
+
+| Table | Contents |
+|---|---|
+| `mart_daily_returns` | ticker, date, daily_return, rf_daily (Bank Rate as a daily return), excess_return |
+| `mart_sector_daily_returns` | date, sector, daily_return of the equal-weighted sector portfolio |
+| `mart_stock_risk` | one row per stock and the index: first/last date, n_returns, years, ann_return, ann_volatility, sharpe, beta, corr_with_index, worst_day_return/date, max_drawdown, peak/trough/recovery dates, days_to_recover, short_history (under 3 years) |
+| `mart_sector_risk` | the same metrics per sector, plus n_stocks_today and avg_corr_other_sectors; includes "All stocks (equal weight)", "Financials excl. investment trusts" and the index for comparison |
+| `mart_sector_correlation` | sector_a, sector_b, correlation (full period, daily returns) |
+| `mart_rolling_sector_corr` | date, sector, corr_with_index over the previous 252 trading days |
+| `mart_stress_periods` | per period and sector, index or stock: window_return, vs_index, max_drawdown_in_window, ann_volatility_in_window; `summary` rows give avg_pairwise_sector_corr in `value` |
+| `mart_stress_period_definitions` | period, label, base_date, end_date, why |
+| `mart_robustness` | test, name, metric, base, alternative, change |
+
+The small tables are also saved as CSVs in `outputs/tables/`.

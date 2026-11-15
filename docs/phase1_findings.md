@@ -6,7 +6,7 @@
 ## What was built
 
 One command (`python run_pipeline.py`) downloads the data, loads it unchanged
-into a raw layer, builds a clean layer with SQL, runs 32 data quality checks and
+into a raw layer, builds a clean layer with SQL, runs 33 data quality checks and
 draws two charts. It takes under a minute with downloads, or under ten
 seconds with `--offline`.
 
@@ -48,10 +48,11 @@ The checks found real problems in the free Yahoo data. None was ignored.
 | Unusable history before listing | Lion Finance: price "jumps" 55x on 28 Feb 2012; Endeavour Mining: 619 of 851 days with zero volume before June 2021 | History before the listing date removed (documented) |
 | Bad prints | Admiral, Informa and Melrose on 4 Feb 2010; Lloyds and Melrose on 5 Mar 2010: open = high = low = close, +17% to +34%, reversed next day | 5 rows removed by the flat-bar rule |
 | Prices in US dollars or euros | Compass and IHG (whole history in USD), Metlen (EUR) | Converted to pence at the daily exchange rate |
-| Missing days | 26 stock-days in total, no stock missing more than 5 | Left missing, not filled |
+| Carried-forward prices (found in Phase 2) | 11 July 2017: 41 stocks show zero volume and yesterday's close while the index moved −0.5% | 41 rows removed; treated as missing |
+| Missing days | 26 stock-days in the source data (67 including the carried-forward rows), no stock missing more than 5 | Left missing, not filled |
 | Minor inconsistency | Standard Life, 17 May 2010: daily low is 0.03p above the high | Kept; warning only |
 
-All 1,137 removed rows are listed with reasons in the `clean_price_exclusions`
+All 1,178 removed rows are listed with reasons in the `clean_price_exclusions`
 table. Every raw row on a trading day is accounted for (kept or logged), and a
 test checks this.
 

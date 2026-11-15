@@ -12,7 +12,9 @@
 --                        that reverses the next day -> removed
 --        is_unit_shift   ~100x jump that does NOT reverse -> kept, fails a test
 --        is_extreme_move other move beyond the extreme threshold -> kept, reported
---        is_stale        zero volume and unchanged close -> kept, reported
+--        is_stale        zero volume and unchanged close -> kept, reported,
+--                        unless many stocks are stale on the same day
+--                        (is_carried_forward) -> removed
 --   Gaps are NOT forward-filled: a missing day stays missing.
 -- Upper-case tokens in double braces are replaced with thresholds from
 -- src/ftselab/config.py before this file runs.
@@ -92,31 +94,43 @@ spikes_with_lag AS (
            COALESCE(LAG(is_unit_spike + is_bad_print) OVER (PARTITION BY ticker ORDER BY date), 0)
                AS follows_spike
     FROM spikes s
+),
+flagged AS (
+    SELECT ticker, date, quote_currency, open, high, low, close, adj_close, volume,
+           prev_ratio, was_corrected,
+           is_unit_spike,
+           CASE WHEN is_unit_spike = 0 THEN is_bad_print ELSE 0 END AS is_bad_print,
+           CASE WHEN is_unit_spike = 0 AND follows_spike = 0
+                     AND (prev_ratio > {{UNIT_RATIO_HIGH}} OR prev_ratio < {{UNIT_RATIO_LOW}})
+                THEN 1 ELSE 0 END AS is_unit_shift,
+           CASE WHEN is_unit_spike = 0 AND is_bad_print = 0 AND follows_spike = 0
+                     AND prev_ratio BETWEEN {{UNIT_RATIO_LOW}} AND {{UNIT_RATIO_HIGH}}
+                     AND ABS(prev_ratio - 1) > {{EXTREME_MOVE}}
+                THEN 1 ELSE 0 END AS is_extreme_move,
+           CASE WHEN ticker <> '^FTSE' AND volume = 0 AND close = prev_close
+                THEN 1 ELSE 0 END AS is_stale
+    FROM spikes_with_lag
 )
-SELECT ticker, date, quote_currency, open, high, low, close, adj_close, volume,
-       prev_ratio, was_corrected,
-       is_unit_spike,
-       CASE WHEN is_unit_spike = 0 THEN is_bad_print ELSE 0 END AS is_bad_print,
-       CASE WHEN is_unit_spike = 0 AND follows_spike = 0
-                 AND (prev_ratio > {{UNIT_RATIO_HIGH}} OR prev_ratio < {{UNIT_RATIO_LOW}})
-            THEN 1 ELSE 0 END AS is_unit_shift,
-       CASE WHEN is_unit_spike = 0 AND is_bad_print = 0 AND follows_spike = 0
-                 AND prev_ratio BETWEEN {{UNIT_RATIO_LOW}} AND {{UNIT_RATIO_HIGH}}
-                 AND ABS(prev_ratio - 1) > {{EXTREME_MOVE}}
-            THEN 1 ELSE 0 END AS is_extreme_move,
-       CASE WHEN ticker <> '^FTSE' AND volume = 0 AND close = prev_close
-            THEN 1 ELSE 0 END AS is_stale
-FROM spikes_with_lag;
+-- is_carried_forward: a stale row on a day when many stocks are stale at once.
+-- That pattern means the source repeated yesterday's close for a day it has
+-- no data for, which would create false 0% returns -> removed.
+SELECT f.*,
+       CASE WHEN is_stale = 1
+                 AND SUM(is_stale) OVER (PARTITION BY date) >= {{STALE_DAY_MIN_STOCKS}}
+            THEN 1 ELSE 0 END AS is_carried_forward
+FROM flagged f;
 
 -- Audit trail: every row removed from the clean layer, with the reason.
 DROP TABLE IF EXISTS clean_price_exclusions;
 CREATE TABLE clean_price_exclusions AS
 SELECT ticker, date, close, adj_close, prev_ratio,
        CASE WHEN is_unit_spike = 1 THEN 'one-day ~100x unit spike that reverses next day'
-            ELSE 'flat-bar bad print: large move with open = high = low = close, reversed next day'
+            WHEN is_bad_print = 1
+            THEN 'flat-bar bad print: large move with open = high = low = close, reversed next day'
+            ELSE 'carried-forward price: zero volume and unchanged close on a day many stocks show the same'
        END AS reason
 FROM clean_prices_flagged
-WHERE is_unit_spike = 1 OR is_bad_print = 1
+WHERE is_unit_spike = 1 OR is_bad_print = 1 OR is_carried_forward = 1
 UNION ALL
 SELECT d.ticker, d.date, d.close, d.adj_close, NULL,
        'before usable history (see price_corrections.csv): ' || x.reason
@@ -131,7 +145,7 @@ CREATE TABLE clean_prices AS
 SELECT ticker, date, quote_currency, open, high, low, close, adj_close, volume,
        was_corrected, is_unit_shift, is_extreme_move, is_stale
 FROM clean_prices_flagged
-WHERE is_unit_spike = 0 AND is_bad_print = 0
+WHERE is_unit_spike = 0 AND is_bad_print = 0 AND is_carried_forward = 0
 ORDER BY ticker, date;
 
 CREATE UNIQUE INDEX ix_clean_prices_ticker_date ON clean_prices (ticker, date);

@@ -258,6 +258,47 @@ def test_quality_checks_catch_planted_problems(synthetic_db):
     assert report.loc["prices_fx_available", "status"] == "pass"
 
 
+def test_market_wide_stale_day_removed(monkeypatch):
+    """When several stocks repeat yesterday's close with zero volume on the same
+    day, the rows are removed (the source filled a gap); a lone stale stock stays."""
+    monkeypatch.setitem(db.SQL_TOKENS, "STALE_DAY_MIN_STOCKS", 2)
+    days = ["2026-01-05", "2026-01-06", "2026-01-07", "2026-01-08"]
+    rows = _price_rows("^FTSE", days, [100, 101, 99, 102], volume=0)
+    for t in ["AAA.L", "BBB.L"]:
+        r = _price_rows(t, days, [10, 11, 11, 12])
+        r[2]["volume"] = 0          # 7 Jan: unchanged close, zero volume
+        rows += r
+    lone = _price_rows("CCC.L", days, [20, 21, 22, 22])
+    lone[3]["volume"] = 0           # 8 Jan: only this stock is stale
+    rows += lone
+    cons = pd.DataFrame({"epic": ["AAA", "BBB", "CCC"], "yahoo_ticker": ["AAA.L", "BBB.L", "CCC.L"],
+                         "company": list("ABC"), "isin": ["1", "2", "3"], "icb_sector": ["Banks"] * 3,
+                         "icb_industry": ["Financials"] * 3, "is_investment_trust": ["0"] * 3,
+                         "snapshot_date": ["x"] * 3, "source_url": ["x"] * 3})
+    conn = db.connect(":memory:")
+    db.load_raw(conn, {
+        "prices": pd.DataFrame(rows),
+        "ticker_info": pd.DataFrame({"ticker": ["AAA.L"], "currency": ["GBp"], "exchange": ["LSE"]}),
+        "fx": pd.DataFrame({"pair": ["GBPUSD=X"], "date": ["2026-01-05"], "rate": [1.3]}),
+        "price_corrections": pd.DataFrame(columns=["ticker", "action", "before_date", "factor",
+                                                   "reason", "evidence"]),
+        "constituents": cons,
+        "boe_decisions": pd.DataFrame({"decision_date": ["2026-01-06"], "old_rate_pct": [4.0],
+                                       "new_rate_pct": [4.0], "change_bp": [0], "decision": ["hold"],
+                                       "is_scheduled": [1], "source": ["t"]}),
+        "bank_rate_daily": pd.DataFrame({"date": ["2026-01-05"], "bank_rate_pct": [4.0]}),
+    })
+    db.build_clean(conn)
+    kept = db.query("SELECT ticker FROM clean_prices WHERE date = '2026-01-07' "
+                    "AND ticker <> '^FTSE'", conn)
+    assert kept["ticker"].tolist() == ["CCC.L"]  # CCC traded normally that day
+    logged = db.query("SELECT ticker FROM clean_price_exclusions WHERE reason LIKE 'carried-forward%'", conn)
+    assert sorted(logged["ticker"]) == ["AAA.L", "BBB.L"]
+    lone_kept = db.query("SELECT is_stale FROM clean_prices WHERE ticker = 'CCC.L' AND date = '2026-01-08'", conn)
+    assert lone_kept["is_stale"].tolist() == [1]
+    conn.close()
+
+
 def test_render_sql_rejects_unknown_token():
     with pytest.raises(ValueError):
         db.render_sql("SELECT {{NOT_A_TOKEN}}")

@@ -61,6 +61,10 @@ CHECKS: list[Check] = [
     Check("prices_extreme_moves_reported", "warning",
           f"One-day moves above {config.EXTREME_MOVE:.0%} (kept; listed for review)",
           "SELECT p.ticker, p.date, p.adj_close FROM clean_prices p WHERE is_extreme_move = 1"),
+    Check("prices_no_market_wide_stale_days", "error",
+          f"No day with {config.STALE_DAY_MIN_STOCKS}+ stocks carrying yesterday's price forward",
+          "SELECT date, COUNT(*) n FROM clean_prices WHERE is_stale = 1 GROUP BY date "
+          f"HAVING n >= {config.STALE_DAY_MIN_STOCKS}"),
     Check("prices_stale_days_reported", "warning",
           "Zero-volume days with an unchanged close (kept; listed for review)",
           "SELECT ticker, date FROM clean_prices WHERE is_stale = 1"),
