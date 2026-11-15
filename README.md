@@ -8,8 +8,8 @@ This project answers those questions with 17 years of daily data for today's
 FTSE 100 companies and every Bank of England Bank Rate decision since 2010.
 It describes what happened; it makes no price predictions.
 
-**Interactive app:** _link added after deployment_ · refreshed every weekday by
-GitHub Actions.
+**Interactive app: [ftse100-risk-rates-lab.streamlit.app](https://ftse100-risk-rates-lab.streamlit.app/)**,
+refreshed every weekday by GitHub Actions.
 
 ## Project status
 

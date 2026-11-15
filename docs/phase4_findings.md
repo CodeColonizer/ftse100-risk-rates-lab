@@ -11,7 +11,9 @@
    (cleaning, 40 data quality checks, risk analytics and event study), runs all
    tests, and only then publishes the app with its new data.
 2. **An interactive Streamlit app** ([`app/streamlit_app.py`](../app/streamlit_app.py)),
-   deployed on Streamlit Community Cloud from the `streamlit-app` branch. It has
+   live at **[ftse100-risk-rates-lab.streamlit.app](https://ftse100-risk-rates-lab.streamlit.app/)**,
+   deployed on Streamlit Community Cloud from the `streamlit-app` branch
+   (Python 3.12 or later; the app needs only Streamlit, pandas and Altair). It has
    six tabs: Overview, Sector risk, Diversification, Stress periods, Bank Rate
    decisions, and Data & method.
 3. **A test workflow** ([`.github/workflows/tests.yml`](../.github/workflows/tests.yml))
@@ -63,7 +65,11 @@ a phone-width screen.
   5 MB, all tables present, growth series start at 100, zero failed quality
   checks). It also runs the whole app headless with Streamlit's `AppTest` and
   fails on any error.
-- The app was also checked by hand in a browser at desktop and phone widths.
+- The app was also checked by hand in a browser at desktop and phone widths,
+  locally and on the deployed site.
+- First automated run (15 November 2026): downloads from GitHub's servers
+  worked, all 40 data quality checks and all tests passed, and the app was
+  published with data through 13 November 2026.
 - Total: 119 tests.
 
 ## Operating notes
