@@ -17,6 +17,7 @@ from . import config
 RAW_PRICE_FILE = config.RAW_DIR / "prices" / "prices_raw.csv.gz"
 RAW_INFO_FILE = config.RAW_DIR / "prices" / "ticker_info.csv"
 RAW_FX_FILE = config.RAW_DIR / "prices" / "fx_raw.csv"
+RAW_DIVIDEND_FILE = config.RAW_DIR / "prices" / "dividends_raw.csv"
 PRICE_COLUMNS = ["ticker", "date", "open", "high", "low", "close", "adj_close", "volume"]
 
 
@@ -82,18 +83,33 @@ def download_prices(
     return prices
 
 
-def download_ticker_info(tickers: list[str]) -> pd.DataFrame:
-    """Quote currency and exchange for each ticker (GBp = pence, GBP = pounds)."""
-    rows = []
+def download_ticker_info(tickers: list[str]) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Quote currency and exchange (GBp = pence) and the dividend history of each ticker.
+
+    Dividends are needed because Yahoo's adjusted close for London stocks
+    barely reflects dividends (see docs/decisions.md, decision 25), so we
+    build total returns ourselves from the close and the dividends.
+    Dividend amounts are in the ticker's quote currency, dated on the
+    ex-dividend date.
+    """
+    rows, divs = [], []
     for t in tickers:
         currency = exchange = None
         try:
-            fi = yf.Ticker(t).fast_info
+            tk = yf.Ticker(t)
+            fi = tk.fast_info
             currency, exchange = fi.get("currency"), fi.get("exchange")
+            d = tk.dividends
+            if len(d):
+                d = d[d.index >= pd.Timestamp(config.START_DATE, tz=d.index.tz)]
+                divs.append(pd.DataFrame({"ticker": t, "date": d.index.strftime("%Y-%m-%d"),
+                                          "dividend": d.to_numpy()}))
         except Exception as exc:  # network or Yahoo error: record and move on
             print(f"  ! Could not read info for {t}: {exc}")
         rows.append({"ticker": t, "currency": currency, "exchange": exchange})
-    return pd.DataFrame(rows)
+    dividends = (pd.concat(divs, ignore_index=True) if divs
+                 else pd.DataFrame(columns=["ticker", "date", "dividend"]))
+    return pd.DataFrame(rows), dividends
 
 
 def download_fx(pairs: list[str] = config.FX_PAIRS) -> pd.DataFrame:
@@ -102,20 +118,23 @@ def download_fx(pairs: list[str] = config.FX_PAIRS) -> pd.DataFrame:
     return fx.rename(columns={"ticker": "pair", "close": "rate"})[["pair", "date", "rate"]].dropna()
 
 
-def refresh(tickers: list[str], offline: bool = False) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """Download prices, ticker info and FX (unless offline), cached in data/raw/."""
+def refresh(tickers: list[str], offline: bool = False):
+    """Download prices, ticker info, dividends and FX (unless offline), cached in data/raw/.
+
+    Returns (prices, info, fx, dividends)."""
     if offline:
-        if not (RAW_PRICE_FILE.exists() and RAW_FX_FILE.exists()):
-            raise FileNotFoundError("No cached prices; run without --offline first")
-        info = pd.read_csv(RAW_INFO_FILE) if RAW_INFO_FILE.exists() else pd.DataFrame(
-            columns=["ticker", "currency", "exchange"])
-        return pd.read_csv(RAW_PRICE_FILE), info, pd.read_csv(RAW_FX_FILE)
+        needed = [RAW_PRICE_FILE, RAW_FX_FILE, RAW_INFO_FILE, RAW_DIVIDEND_FILE]
+        if not all(p.exists() for p in needed):
+            raise FileNotFoundError("No complete cache in data/raw/; run without --offline first")
+        return (pd.read_csv(RAW_PRICE_FILE), pd.read_csv(RAW_INFO_FILE),
+                pd.read_csv(RAW_FX_FILE), pd.read_csv(RAW_DIVIDEND_FILE))
 
     prices = download_prices(tickers)
-    info = download_ticker_info(tickers)
+    info, dividends = download_ticker_info(tickers)
     fx = download_fx()
     RAW_PRICE_FILE.parent.mkdir(parents=True, exist_ok=True)
     prices.to_csv(RAW_PRICE_FILE, index=False)
     info.to_csv(RAW_INFO_FILE, index=False)
     fx.to_csv(RAW_FX_FILE, index=False)
-    return prices, info, fx
+    dividends.to_csv(RAW_DIVIDEND_FILE, index=False)
+    return prices, info, fx, dividends

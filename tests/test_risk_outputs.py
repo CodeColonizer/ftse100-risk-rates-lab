@@ -87,9 +87,18 @@ def test_covid_window_was_a_crash(conn):
     assert st["window_return"].iloc[0] < -0.25
 
 
-def test_daily_returns_match_prices(conn):
-    one = db.query(f"SELECT date, daily_return FROM mart_daily_returns WHERE ticker = 'AZN.L' "
-                   "ORDER BY date LIMIT 5", conn)
-    px = db.query("SELECT date, adj_close FROM clean_prices WHERE ticker = 'AZN.L' ORDER BY date LIMIT 6", conn)
-    expected = (px["adj_close"] / px["adj_close"].shift(1) - 1).iloc[1:].tolist()
-    assert one["daily_return"].tolist() == pytest.approx(expected)
+def test_daily_returns_are_total_returns(conn):
+    m = db.query("SELECT r.daily_return, t.total_return FROM mart_daily_returns r "
+                 "JOIN clean_total_returns t ON t.ticker = r.ticker AND t.date = r.date "
+                 "WHERE r.ticker IN ('AZN.L', 'HSBA.L')", conn)
+    assert len(m) > 1000
+    assert m["daily_return"].tolist() == pytest.approx(m["total_return"].tolist())
+
+
+def test_dividends_lift_returns_of_high_yielders(conn):
+    """Total return should beat price return by roughly the dividend yield:
+    HSBC and Legal & General have paid several percent a year."""
+    for t in ["HSBA.L", "LGEN.L"]:
+        s = db.query("SELECT AVG(total_return - price_return) * 252 gap FROM clean_total_returns "
+                     "WHERE ticker = :t", conn, t=t)
+        assert 0.02 < s["gap"].iloc[0] < 0.12

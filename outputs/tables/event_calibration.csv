@@ -1,0 +1,27 @@
+kind,series,group_size_like,n_events,draws,false_positive_rate_5pct
+index,^FTSE,hike,17,2000,0.076
+index,^FTSE,hold,127,2000,0.1665
+sector,Basic Materials,hike,17,2000,0.042
+sector,Consumer Discretionary,hike,17,2000,0.0895
+sector,Consumer Staples,hike,17,2000,0.054
+sector,Energy,hike,17,2000,0.0435
+sector,Financials,hike,17,2000,0.0945
+sector,Health Care,hike,17,2000,0.0945
+sector,Industrials,hike,17,2000,0.081
+sector,Real Estate,hike,17,2000,0.052
+sector,Technology,hike,17,2000,0.0415
+sector,Telecommunications,hike,17,2000,0.0435
+sector,Utilities,hike,17,2000,0.0435
+sector,All stocks (equal weight),hike,17,2000,0.0965
+sector,Basic Materials,hold,127,2000,0.043
+sector,Consumer Discretionary,hold,127,2000,0.439
+sector,Consumer Staples,hold,127,2000,0.0485
+sector,Energy,hold,127,2000,0.0465
+sector,Financials,hold,127,2000,0.431
+sector,Health Care,hold,127,2000,0.1935
+sector,Industrials,hold,127,2000,0.153
+sector,Real Estate,hold,127,2000,0.0455
+sector,Technology,hold,127,2000,0.0375
+sector,Telecommunications,hold,127,2000,0.067
+sector,Utilities,hold,127,2000,0.04
+sector,All stocks (equal weight),hold,127,2000,0.489

@@ -88,10 +88,40 @@ CHECKS: list[Check] = [
           "SELECT k.ticker, k.action FROM raw_price_corrections k WHERE NOT EXISTS ("
           " SELECT 1 FROM clean_prices p WHERE p.ticker = k.ticker AND p.was_corrected = 1) "
           "AND NOT EXISTS (SELECT 1 FROM clean_price_exclusions x WHERE x.ticker = k.ticker "
-          " AND x.reason LIKE 'before usable history%')"),
+          " AND x.reason LIKE 'before usable history%') "
+          "AND NOT EXISTS (SELECT 1 FROM clean_dividends d WHERE d.ticker = k.ticker "
+          " AND d.was_corrected = 1)"),
     Check("prices_exclusions_reported", "warning",
           "Rows removed from the clean layer (listed with reasons in clean_price_exclusions)",
           "SELECT ticker, date, reason FROM clean_price_exclusions"),
+    # --- Dividends and total returns ---------------------------------------------
+    Check("dividends_loaded", "error",
+          "Dividend history was downloaded for at least 80 stocks",
+          "SELECT COUNT(DISTINCT ticker) n FROM raw_dividends HAVING n < 80"),
+    Check("dividends_on_trading_days", "warning",
+          "Dividends inside a stock's price history fall on a day with a price (else they are lost)",
+          "SELECT ticker, ex_date FROM clean_dividends "
+          "WHERE within_price_history = 1 AND matched_to_price = 0"),
+    Check("dividend_units_plausible", "error",
+          "No dividend is under 0.02% or over 50% of the previous close (signs of a pence/pound mix-up)",
+          "SELECT ticker, ex_date, dividend_yield_on_day FROM clean_dividends "
+          "WHERE matched_to_price = 1 AND (dividend_yield_on_day < 0.0002 OR dividend_yield_on_day > 0.5)"),
+    Check("dividends_annual_yield_high", "warning",
+          "Stock-years where dividends add up to over 20% of the price (special returns of capital, "
+          "or a scaling error like the one corrected for Melrose)",
+          "SELECT ticker, substr(ex_date, 1, 4) AS year, ROUND(SUM(dividend_yield_on_day), 3) AS yield "
+          "FROM clean_dividends GROUP BY ticker, year HAVING SUM(dividend_yield_on_day) > 0.20"),
+    Check("dividends_large_reported", "warning",
+          "Dividends over 10% of the price (usually special dividends; listed for review)",
+          "SELECT ticker, ex_date, dividend_yield_on_day FROM clean_dividends "
+          "WHERE dividend_yield_on_day > 0.10"),
+    Check("total_returns_cover_prices", "error",
+          "Exactly one total-return row per clean price",
+          "SELECT (SELECT COUNT(*) FROM clean_prices) a, (SELECT COUNT(*) FROM clean_total_returns) b "
+          "WHERE a <> b"),
+    Check("total_return_not_below_price_return", "error",
+          "Total return is never below price return (dividends cannot be negative)",
+          "SELECT ticker, date FROM clean_total_returns WHERE total_return < price_return - 1e-12"),
     Check("index_covers_start", "error",
           "FTSE 100 index history starts in the first week of the window",
           f"SELECT MIN(date) first_date FROM clean_prices WHERE ticker = '{config.INDEX_TICKER}' "

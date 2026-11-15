@@ -7,7 +7,7 @@ price data is **not** committed; `python run_pipeline.py` downloads it.
 |---|---|---|---|
 | `ftse100_constituents_2026-11-15.csv` | The 100 FTSE 100 companies, with EPIC code, ISIN, ICB sector, mapped ICB industry and Yahoo ticker | Wikipedia, [FTSE 100 Index](https://en.wikipedia.org/wiki/FTSE_100_Index), constituents table | 15 Nov 2026 |
 | `boe_bank_rate_decisions.csv` | Every MPC Bank Rate decision since Jan 2010: date, old rate, new rate, change, hike/cut/hold, scheduled or not | Bank of England, [MPC voting history (mpcvoting.xlsx)](https://www.bankofengland.co.uk/-/media/boe/files/monetary-policy-summary-and-minutes/mpcvoting.xlsx) | Regenerated on each pipeline run (last: 15 Nov 2026) |
-| `price_corrections.csv` | Three documented fixes to Yahoo price histories, with reasons and evidence | Our own data checks (see `docs/phase1_findings.md`) | 15 Nov 2026 |
+| `price_corrections.csv` | Four documented fixes to Yahoo price and dividend histories, with reasons and evidence | Our own data checks (see `docs/phase1_findings.md`) | 15 Nov 2026 |
 
 ## How each file was checked
 
@@ -32,6 +32,7 @@ must fall on a decision date. Both checks pass.
 | Data | Source | Notes |
 |---|---|---|
 | Daily prices from 4 Jan 2010 (first trading day of 2010), 100 stocks + `^FTSE` | Yahoo Finance via the `yfinance` library | Unofficial data; open, high, low, close, adjusted close, volume |
+| Dividends (amount, ex-dividend date) | Yahoo Finance (`Ticker.dividends`) | Used to build total returns, because Yahoo's adjusted close for London stocks barely reflects dividends |
 | Quote currency per ticker | Yahoo Finance | Three lines are quoted in USD or EUR |
 | GBP/USD and GBP/EUR daily rates | Yahoo Finance (`GBPUSD=X`, `GBPEUR=X`) | Used to convert those lines to pence |
 | Daily Bank Rate | Bank of England IADB, series `IUDBEDR` | Risk-free rate for Phase 2 |

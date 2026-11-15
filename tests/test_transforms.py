@@ -156,7 +156,11 @@ def synthetic_db():
                          "exchange": ["LSE", "LSE"]})
 
     conn = db.connect(":memory:")
+    # STL.L pays 1p going ex on 12 Jan; USD.L pays $0.25 going ex on 12 Jan
+    dividends = pd.DataFrame({"ticker": ["STL.L", "USD.L"], "date": ["2026-01-12", "2026-01-12"],
+                              "dividend": [1.0, 0.25]})
     db.load_raw(conn, {"prices": pd.DataFrame(rows), "ticker_info": info, "fx": fx,
+                       "dividends": dividends,
                        "price_corrections": corrections, "constituents": cons,
                        "boe_decisions": decisions, "bank_rate_daily": bank_rate})
     db.build_clean(conn)
@@ -258,6 +262,32 @@ def test_quality_checks_catch_planted_problems(synthetic_db):
     assert report.loc["prices_fx_available", "status"] == "pass"
 
 
+def test_total_return_adds_dividend_on_ex_date(synthetic_db):
+    tr = db.query("SELECT date, dividend, price_return, total_return FROM clean_total_returns "
+                  "WHERE ticker = 'STL.L' ORDER BY date", synthetic_db)
+    day = tr.set_index("date")
+    # 9 Jan close 53, 12 Jan close 54 and a 1p dividend
+    assert day.loc["2026-01-12", "price_return"] == pytest.approx(54 / 53 - 1)
+    assert day.loc["2026-01-12", "total_return"] == pytest.approx(55 / 53 - 1)
+    assert day.loc["2026-01-09", "total_return"] == pytest.approx(day.loc["2026-01-09", "price_return"])
+    assert pd.isna(day.loc["2026-01-05", "total_return"])  # first day: no previous close
+
+
+def test_total_return_not_bridged_over_gap(synthetic_db):
+    # BIG.L has no price on 12 Jan, so 13 Jan has no one-day return
+    tr = db.query("SELECT total_return FROM clean_total_returns WHERE ticker = 'BIG.L' "
+                  "AND date = '2026-01-13'", synthetic_db)
+    assert pd.isna(tr["total_return"].iloc[0])
+
+
+def test_dividend_converted_like_price(synthetic_db):
+    # $0.25 at 1.30 $/GBP = 19.23p, the same conversion as the USD price that day
+    d = db.query("SELECT dividend_pence, dividend_yield_on_day FROM clean_dividends "
+                 "WHERE ticker = 'USD.L'", synthetic_db)
+    assert d["dividend_pence"].iloc[0] == pytest.approx(0.25 / 1.30 * 100)
+    assert d["dividend_yield_on_day"].iloc[0] == pytest.approx(0.25 / 12.5)
+
+
 def test_market_wide_stale_day_removed(monkeypatch):
     """When several stocks repeat yesterday's close with zero volume on the same
     day, the rows are removed (the source filled a gap); a lone stale stock stays."""
@@ -280,6 +310,7 @@ def test_market_wide_stale_day_removed(monkeypatch):
         "prices": pd.DataFrame(rows),
         "ticker_info": pd.DataFrame({"ticker": ["AAA.L"], "currency": ["GBp"], "exchange": ["LSE"]}),
         "fx": pd.DataFrame({"pair": ["GBPUSD=X"], "date": ["2026-01-05"], "rate": [1.3]}),
+        "dividends": pd.DataFrame({"ticker": ["AAA.L"], "date": ["2026-01-06"], "dividend": [0.5]}),
         "price_corrections": pd.DataFrame(columns=["ticker", "action", "before_date", "factor",
                                                    "reason", "evidence"]),
         "constituents": cons,

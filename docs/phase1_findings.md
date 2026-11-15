@@ -6,7 +6,7 @@
 ## What was built
 
 One command (`python run_pipeline.py`) downloads the data, loads it unchanged
-into a raw layer, builds a clean layer with SQL, runs 33 data quality checks and
+into a raw layer, builds a clean layer with SQL, runs 40 data quality checks (33 at the end of Phase 1; seven dividend checks were added in Phase 3) and
 draws two charts. It takes under a minute with downloads, or under ten
 seconds with `--offline`.
 
@@ -49,6 +49,8 @@ The checks found real problems in the free Yahoo data. None was ignored.
 | Bad prints | Admiral, Informa and Melrose on 4 Feb 2010; Lloyds and Melrose on 5 Mar 2010: open = high = low = close, +17% to +34%, reversed next day | 5 rows removed by the flat-bar rule |
 | Prices in US dollars or euros | Compass and IHG (whole history in USD), Metlen (EUR) | Converted to pence at the daily exchange rate |
 | Carried-forward prices (found in Phase 2) | 11 July 2017: 41 stocks show zero volume and yesterday's close while the index moved −0.5% | 41 rows removed; treated as missing |
+| Adjusted close ignores most dividends (found in Phase 3) | HSBC's adjusted and raw close differ by under 1% over 16 years despite several percent a year in dividends | Total returns rebuilt from Yahoo's dividend records (decision 25) |
+| Dividends out of scale (found in Phase 3) | Melrose dividends before its Jan 2016 share consolidation were 15–22% of the price per payment | Scaled by 7/48, Yahoo's own consolidation ratio (documented correction) |
 | Missing days | 26 stock-days in the source data (67 including the carried-forward rows), no stock missing more than 5 | Left missing, not filled |
 | Minor inconsistency | Standard Life, 17 May 2010: daily low is 0.03p above the high | Kept; warning only |
 

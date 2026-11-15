@@ -1,63 +1,63 @@
 test,name,metric,base,alternative,change
-exclude_flagged_extreme_days,AAF.L,ann_volatility,0.458835,0.447735,-0.011101
-exclude_flagged_extreme_days,AAF.L,beta,1.264708,1.254269,-0.010439
-exclude_flagged_extreme_days,ADM.L,ann_volatility,0.256785,0.249107,-0.007677
-exclude_flagged_extreme_days,ADM.L,beta,0.696165,0.684229,-0.011935
-exclude_flagged_extreme_days,BAB.L,ann_volatility,0.323461,0.314019,-0.009442
-exclude_flagged_extreme_days,BAB.L,beta,0.923905,0.923908,3e-06
-exclude_flagged_extreme_days,BGEO.L,ann_volatility,0.384369,0.369856,-0.014513
-exclude_flagged_extreme_days,BGEO.L,beta,1.029855,1.014173,-0.015682
-exclude_flagged_extreme_days,BNZL.L,ann_volatility,0.213359,0.204051,-0.009308
-exclude_flagged_extreme_days,BNZL.L,beta,0.689653,0.691614,0.001961
-exclude_flagged_extreme_days,CTEC.L,ann_volatility,0.318069,0.288531,-0.029538
-exclude_flagged_extreme_days,CTEC.L,beta,0.58104,0.586379,0.005339
-exclude_flagged_extreme_days,DPLM.L,ann_volatility,0.303007,0.295919,-0.007088
-exclude_flagged_extreme_days,DPLM.L,beta,0.732861,0.725147,-0.007714
-exclude_flagged_extreme_days,EZJ.L,ann_volatility,0.413359,0.404275,-0.009085
-exclude_flagged_extreme_days,EZJ.L,beta,1.188065,1.152677,-0.035388
-exclude_flagged_extreme_days,GAW.L,ann_volatility,0.326529,0.318151,-0.008378
-exclude_flagged_extreme_days,GAW.L,beta,0.487463,0.486586,-0.000877
-exclude_flagged_extreme_days,GLEN.L,ann_volatility,0.40479,0.397865,-0.006925
-exclude_flagged_extreme_days,GLEN.L,beta,1.605999,1.588362,-0.017637
-exclude_flagged_extreme_days,HSX.L,ann_volatility,0.265697,0.257756,-0.007941
-exclude_flagged_extreme_days,HSX.L,beta,0.675612,0.666711,-0.008901
-exclude_flagged_extreme_days,IAG.L,ann_volatility,0.416104,0.399279,-0.016825
-exclude_flagged_extreme_days,IAG.L,beta,1.417153,1.371841,-0.045312
-exclude_flagged_extreme_days,ICG.L,ann_volatility,0.354513,0.345559,-0.008953
-exclude_flagged_extreme_days,ICG.L,beta,1.427148,1.399532,-0.027616
-exclude_flagged_extreme_days,IGG.L,ann_volatility,0.286188,0.270532,-0.015656
-exclude_flagged_extreme_days,IGG.L,beta,0.677748,0.682324,0.004577
-exclude_flagged_extreme_days,IHG.L,ann_volatility,0.310477,0.30188,-0.008597
-exclude_flagged_extreme_days,IHG.L,beta,1.151781,1.150295,-0.001486
-exclude_flagged_extreme_days,MNG.L,ann_volatility,0.364214,0.327214,-0.037
-exclude_flagged_extreme_days,MNG.L,beta,1.284289,1.214332,-0.069957
-exclude_flagged_extreme_days,MRO.L,ann_volatility,0.398797,0.382981,-0.015816
-exclude_flagged_extreme_days,MRO.L,beta,1.344793,1.360043,0.015251
-exclude_flagged_extreme_days,PSON.L,ann_volatility,0.282485,0.273489,-0.008996
-exclude_flagged_extreme_days,PSON.L,beta,0.757921,0.760561,0.00264
-exclude_flagged_extreme_days,RR.L,ann_volatility,0.416838,0.403104,-0.013734
-exclude_flagged_extreme_days,RR.L,beta,1.340407,1.296218,-0.044189
-exclude_flagged_extreme_days,WPP.L,ann_volatility,0.3079,0.299954,-0.007946
-exclude_flagged_extreme_days,WPP.L,beta,1.14379,1.145304,0.001514
-full_history_members_only,Basic Materials,ann_volatility,0.288278,0.283334,-0.004944
-full_history_members_only,Basic Materials,beta,1.294542,1.245806,-0.048736
-full_history_members_only,Consumer Discretionary,ann_volatility,0.201952,0.201952,0.0
-full_history_members_only,Consumer Discretionary,beta,1.015043,1.015043,0.0
-full_history_members_only,Consumer Staples,ann_volatility,0.147711,0.147462,-0.000248
-full_history_members_only,Consumer Staples,beta,0.737722,0.718379,-0.019343
-full_history_members_only,Energy,ann_volatility,0.268631,0.262513,-0.006118
-full_history_members_only,Energy,beta,1.165783,1.170783,0.004999
-full_history_members_only,Financials,ann_volatility,0.196248,0.197117,0.000868
-full_history_members_only,Financials,beta,1.129779,1.137268,0.007489
-full_history_members_only,Health Care,ann_volatility,0.169249,0.177347,0.008098
-full_history_members_only,Health Care,beta,0.720939,0.75912,0.038181
-full_history_members_only,Industrials,ann_volatility,0.177957,0.177957,0.0
-full_history_members_only,Industrials,beta,0.967768,0.967768,0.0
-full_history_members_only,Real Estate,ann_volatility,0.207093,0.214022,0.00693
-full_history_members_only,Real Estate,beta,0.821559,0.853243,0.031685
-full_history_members_only,Technology,ann_volatility,0.189451,0.195274,0.005823
-full_history_members_only,Technology,beta,0.75043,0.743821,-0.006609
-full_history_members_only,Telecommunications,ann_volatility,0.230894,0.228604,-0.00229
-full_history_members_only,Telecommunications,beta,0.947848,0.892065,-0.055784
-full_history_members_only,Utilities,ann_volatility,0.177714,0.178393,0.00068
-full_history_members_only,Utilities,beta,0.67506,0.674294,-0.000766
+exclude_flagged_extreme_days,AAF.L,ann_volatility,0.457525,0.446403,-0.011122
+exclude_flagged_extreme_days,AAF.L,beta,1.265412,1.254979,-0.010433
+exclude_flagged_extreme_days,ADM.L,ann_volatility,0.252365,0.244533,-0.007832
+exclude_flagged_extreme_days,ADM.L,beta,0.690007,0.678054,-0.011953
+exclude_flagged_extreme_days,BAB.L,ann_volatility,0.322741,0.313282,-0.009459
+exclude_flagged_extreme_days,BAB.L,beta,0.922322,0.922326,3e-06
+exclude_flagged_extreme_days,BGEO.L,ann_volatility,0.382981,0.368402,-0.014579
+exclude_flagged_extreme_days,BGEO.L,beta,1.024873,1.009183,-0.015691
+exclude_flagged_extreme_days,BNZL.L,ann_volatility,0.212528,0.203176,-0.009353
+exclude_flagged_extreme_days,BNZL.L,beta,0.684742,0.686703,0.001962
+exclude_flagged_extreme_days,CTEC.L,ann_volatility,0.317727,0.288137,-0.02959
+exclude_flagged_extreme_days,CTEC.L,beta,0.58278,0.588121,0.005341
+exclude_flagged_extreme_days,DPLM.L,ann_volatility,0.302842,0.295754,-0.007087
+exclude_flagged_extreme_days,DPLM.L,beta,0.7319,0.724188,-0.007712
+exclude_flagged_extreme_days,EZJ.L,ann_volatility,0.412234,0.403129,-0.009105
+exclude_flagged_extreme_days,EZJ.L,beta,1.182963,1.147559,-0.035404
+exclude_flagged_extreme_days,GAW.L,ann_volatility,0.324838,0.316427,-0.008411
+exclude_flagged_extreme_days,GAW.L,beta,0.484079,0.483203,-0.000876
+exclude_flagged_extreme_days,GLEN.L,ann_volatility,0.403788,0.396838,-0.006949
+exclude_flagged_extreme_days,GLEN.L,beta,1.600619,1.582963,-0.017656
+exclude_flagged_extreme_days,HSX.L,ann_volatility,0.263394,0.255387,-0.008007
+exclude_flagged_extreme_days,HSX.L,beta,0.672905,0.664006,-0.008899
+exclude_flagged_extreme_days,IAG.L,ann_volatility,0.415953,0.399118,-0.016835
+exclude_flagged_extreme_days,IAG.L,beta,1.418216,1.372915,-0.045301
+exclude_flagged_extreme_days,ICG.L,ann_volatility,0.348507,0.339381,-0.009127
+exclude_flagged_extreme_days,ICG.L,beta,1.419829,1.392158,-0.027671
+exclude_flagged_extreme_days,IGG.L,ann_volatility,0.283161,0.267311,-0.01585
+exclude_flagged_extreme_days,IGG.L,beta,0.680623,0.685202,0.004579
+exclude_flagged_extreme_days,IHG.L,ann_volatility,0.310367,0.301765,-0.008602
+exclude_flagged_extreme_days,IHG.L,beta,1.151377,1.149891,-0.001486
+exclude_flagged_extreme_days,MNG.L,ann_volatility,0.355438,0.31742,-0.038018
+exclude_flagged_extreme_days,MNG.L,beta,1.285379,1.215379,-0.07
+exclude_flagged_extreme_days,MRO.L,ann_volatility,0.397909,0.382065,-0.015844
+exclude_flagged_extreme_days,MRO.L,beta,1.344089,1.359335,0.015246
+exclude_flagged_extreme_days,PSON.L,ann_volatility,0.281145,0.272095,-0.00905
+exclude_flagged_extreme_days,PSON.L,beta,0.755165,0.757806,0.002641
+exclude_flagged_extreme_days,RR.L,ann_volatility,0.416848,0.403117,-0.01373
+exclude_flagged_extreme_days,RR.L,beta,1.341938,1.297762,-0.044176
+exclude_flagged_extreme_days,WPP.L,ann_volatility,0.307001,0.29904,-0.007961
+exclude_flagged_extreme_days,WPP.L,beta,1.14238,1.143893,0.001513
+full_history_members_only,Basic Materials,ann_volatility,0.287541,0.282531,-0.00501
+full_history_members_only,Basic Materials,beta,1.289997,1.241464,-0.048533
+full_history_members_only,Consumer Discretionary,ann_volatility,0.201792,0.201792,0.0
+full_history_members_only,Consumer Discretionary,beta,1.013641,1.013641,0.0
+full_history_members_only,Consumer Staples,ann_volatility,0.147452,0.14711,-0.000342
+full_history_members_only,Consumer Staples,beta,0.736775,0.717274,-0.019501
+full_history_members_only,Energy,ann_volatility,0.266657,0.261062,-0.005595
+full_history_members_only,Energy,beta,1.157708,1.164005,0.006297
+full_history_members_only,Financials,ann_volatility,0.195896,0.196718,0.000822
+full_history_members_only,Financials,beta,1.127654,1.135148,0.007494
+full_history_members_only,Health Care,ann_volatility,0.168359,0.176252,0.007893
+full_history_members_only,Health Care,beta,0.715101,0.751862,0.036761
+full_history_members_only,Industrials,ann_volatility,0.177939,0.177939,0.0
+full_history_members_only,Industrials,beta,0.967345,0.967345,0.0
+full_history_members_only,Real Estate,ann_volatility,0.20653,0.213238,0.006708
+full_history_members_only,Real Estate,beta,0.818721,0.850187,0.031466
+full_history_members_only,Technology,ann_volatility,0.189261,0.19499,0.005729
+full_history_members_only,Technology,beta,0.749383,0.742438,-0.006945
+full_history_members_only,Telecommunications,ann_volatility,0.229271,0.226521,-0.002749
+full_history_members_only,Telecommunications,beta,0.94305,0.886831,-0.056219
+full_history_members_only,Utilities,ann_volatility,0.176377,0.177036,0.000659
+full_history_members_only,Utilities,beta,0.673979,0.673197,-0.000782

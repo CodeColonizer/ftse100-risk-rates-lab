@@ -10,6 +10,7 @@ Tables starting `raw_` hold data exactly as downloaded; tables starting
 |---|---|
 | `raw_prices` | Yahoo daily rows: ticker, date, open, high, low, close, adj_close, volume, downloaded_at |
 | `raw_ticker_info` | ticker, quote currency (GBp = pence), exchange |
+| `raw_dividends` | ticker, date (ex-dividend date), dividend in the quote currency |
 | `raw_fx` | pair (`GBPUSD=X`, `GBPEUR=X`), date, rate (foreign currency per pound) |
 | `raw_price_corrections` | `data/reference/price_corrections.csv` |
 | `raw_constituents` | the constituents snapshot CSV |
@@ -48,6 +49,16 @@ epic, ticker, company, isin, icb_sector, icb_industry, is_investment_trust,
 snapshot_date, currency, first_price_date, last_price_date, n_price_days,
 n_missing_days (trading days between first and last price with no price).
 
+### `clean_dividends` — one row per dividend
+ticker, ex_date, dividend_quote_currency, dividend_pence (same units as
+clean_prices), dividend_yield_on_day (dividend / previous close),
+was_corrected, matched_to_price, within_price_history.
+
+### `clean_total_returns` — one row per clean price
+ticker, date, dividend (pence going ex that day), price_return, total_return.
+**Use total_return for all return calculations.** A return is NULL on a
+stock's first day and after any gap in its prices.
+
 ### `clean_boe_decisions` — one row per MPC decision since 2010
 | Column | Meaning |
 |---|---|
@@ -79,3 +90,20 @@ Built by `src/ftselab/risk.py`. All returns are fractions (0.05 = 5%).
 | `mart_robustness` | test, name, metric, base, alternative, change |
 
 The small tables are also saved as CSVs in `outputs/tables/`.
+
+## Event study (Phase 3)
+
+Built by `src/ftselab/events.py`. Abnormal returns are fractions (0.01 = 1%).
+
+| Table | Contents |
+|---|---|
+| `mart_event_list` | every decision with included (1/0) and the reason if excluded |
+| `mart_event_car` | event_date, decision, is_scheduled, kind (index/sector/stock), series, window, car (cumulative abnormal return) |
+| `mart_event_results` | per kind, series, group (hike, cut, cut_incl_emergency, hold, moves_signed, all_scheduled) and window: n_events, mean, median, sd, t_stat, p_t, p_wilcoxon, share_positive, 95% interval, p_placebo (studentised, primary), p_placebo_mean, placebo_centre, family, q_fdr_placebo, q_fdr_t |
+| `mart_event_volatility` | per series: rms abnormal return on decision days and on matched placebo days, variance_ratio, median_abs_ratio, p_placebo_one_sided, q_fdr |
+| `mart_event_calibration` | how often the t-test rejects at 5% on placebo samples |
+| `mart_event_path` | average cumulative abnormal return by day from −5 to +5, per group |
+| `mart_event_placebo_pool` | the non-decision Thursdays used as placebo days |
+| `mart_event_placebo_examples` | placebo distributions for the three tests in the placebo chart |
+
+Small tables are also saved as CSVs in `outputs/tables/` (`event_*.csv`).

@@ -152,20 +152,37 @@ def risk_summary(returns: pd.Series, prices: pd.Series, market: pd.Series,
 # Loading from the clean layer
 # ----------------------------------------------------------------------------------
 
+def total_return_index(returns: pd.DataFrame, listed: pd.DataFrame) -> pd.DataFrame:
+    """Growth of 1 from compounding total returns, only where the stock has a price.
+
+    Used for drawdowns. A day without a return (a gap) counts as 0% so the
+    index carries on, but days before listing stay empty."""
+    return (1 + returns.fillna(0)).cumprod().where(listed)
+
+
 def load_inputs(conn: sqlite3.Connection, exclude_flagged: bool = False):
-    """Prices (date x ticker on the full calendar), members, risk-free and flags."""
+    """Total-return index and daily total returns (date x ticker on the full
+    calendar), members and the daily risk-free return.
+
+    Returns come from clean_total_returns: close plus dividends, built in
+    sql/clean/05_total_return.sql (Yahoo's adjusted close is not used for
+    London stocks because it barely reflects dividends)."""
     calendar = pd.read_sql_query("SELECT date FROM clean_trading_calendar ORDER BY date", conn)["date"]
-    px = pd.read_sql_query("SELECT ticker, date, adj_close, is_extreme_move FROM clean_prices", conn)
-    prices = px.pivot(index="date", columns="ticker", values="adj_close").reindex(calendar)
-    flags = px.pivot(index="date", columns="ticker", values="is_extreme_move").reindex(calendar)
+    tr = pd.read_sql_query(
+        "SELECT t.ticker, t.date, t.total_return, p.is_extreme_move "
+        "FROM clean_total_returns t JOIN clean_prices p ON p.ticker = t.ticker AND p.date = t.date",
+        conn)
+    returns = tr.pivot(index="date", columns="ticker", values="total_return").reindex(calendar)
+    flags = tr.pivot(index="date", columns="ticker", values="is_extreme_move").reindex(calendar)
+    listed = tr.pivot(index="date", columns="ticker", values="is_extreme_move").reindex(calendar).notna()
     members = pd.read_sql_query(
         "SELECT ticker, company, icb_industry, is_investment_trust, first_price_date "
         "FROM clean_constituents", conn)
     rate = pd.read_sql_query("SELECT date, bank_rate_pct FROM clean_bank_rate_daily", conn)
     rf = daily_risk_free(rate.set_index("date")["bank_rate_pct"]).reindex(calendar)
-    returns = daily_returns(prices)
     if exclude_flagged:
         returns = returns.mask(flags.fillna(0).astype(bool))
+    prices = total_return_index(returns, listed)
     return prices, returns, members, rf
 
 

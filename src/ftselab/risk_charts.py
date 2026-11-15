@@ -97,8 +97,8 @@ def correlation_heatmap(conn: sqlite3.Connection) -> str:
                     color="white" if v > 0.62 else INK)
     cb = fig.colorbar(im, ax=ax, shrink=0.75)
     cb.set_label("Correlation of daily returns")
-    ax.set_title("Sector correlations: Energy, Basic Materials and Utilities move least "
-                 "with the rest", loc="left")
+    ax.set_title("Sector correlations: Energy and Basic Materials move least "
+                 "with the other sectors", loc="left")
     _footer(fig, "Daily returns, Jan 2010 to Nov 2026. Sorted from least to most correlated on "
                  "average. 1 = always move together; 0 = unrelated. Source: Yahoo Finance.")
     fig.tight_layout(rect=(0, 0.03, 1, 1))
@@ -165,8 +165,10 @@ def stress_heatmap(conn: sqlite3.Connection) -> str:
             v = wide.iat[i, j]
             ax.text(j, i, f"{v:+.1f}%", ha="center", va="center", fontsize=9.5,
                     color="white" if abs(v) > lim * 0.8 else INK)
-    ax.set_title("Sector returns in three stress periods: in 2022 Energy gained 35% while "
-                 "Real Estate lost 36%", loc="left", pad=48)
+    best, worst = body["hikes_2022"].idxmax(), body["hikes_2022"].idxmin()
+    ax.set_title(f"Sector returns in three stress periods: in 2022 {best} gained "
+                 f"{body.at[best, 'hikes_2022'] * 100:.0f}% while {worst} lost "
+                 f"{-body.at[worst, 'hikes_2022'] * 100:.0f}%", loc="left", pad=48)
     _footer(fig, "Close on the first date to close on the last date; equal-weighted sectors, "
                  "dividends included (the index excludes them). Sorted by 2022. Source: Yahoo Finance.")
     fig.tight_layout(rect=(0, 0.03, 1, 1))

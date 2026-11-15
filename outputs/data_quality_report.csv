@@ -8,13 +8,20 @@ prices_no_future_dates,error,pass,0,No prices dated after today,
 prices_start_on_or_after_start_date,error,pass,0,No prices before the analysis start (2010-01-01),
 prices_on_calendar,error,pass,0,Every price date is an index trading day,
 prices_no_unit_shifts,error,pass,0,No unexplained ~100x price level changes (pence/pound unit errors),
-prices_extreme_moves_reported,warning,review,24,One-day moves above 25% (kept; listed for review),"AAF.L, 2020-03-20, 38.159324645996094; ADM.L, 2011-11-09, 879.2172241210938; BAB.L, 2021-04-13, 319.3196105957031; BGEO.L, 2018-05-29, 1856.5753173828125; BNZL.L, 2025-04-16, 2288.6171875"
+prices_extreme_moves_reported,warning,review,24,One-day moves above 25% (kept; listed for review),"AAF.L, 2020-03-20, 38.15932083129883; ADM.L, 2011-11-09, 879.2173461914062; BAB.L, 2021-04-13, 319.3196105957031; BGEO.L, 2018-05-29, 1856.5751953125; BNZL.L, 2025-04-16, 2288.616943359375"
 prices_no_market_wide_stale_days,error,pass,0,No day with 10+ stocks carrying yesterday's price forward,
 prices_stale_days_reported,warning,review,164,Zero-volume days with an unchanged close (kept; listed for review),"BGEO.L, 2012-05-01; CCEP.L, 2019-05-01; CCEP.L, 2019-12-05; CCEP.L, 2019-12-06; CCEP.L, 2019-12-09"
 prices_rows_accounted_for,error,pass,0,Every raw row on a trading day is either in the clean layer or logged as excluded,
 prices_fx_available,error,pass,0,Every USD/EUR-quoted price has an exchange rate from within the previous 5 days,
 prices_corrections_applied,error,pass,0,Every documented correction in price_corrections.csv changed at least one row,
 prices_exclusions_reported,warning,review,1178,Rows removed from the clean layer (listed with reasons in clean_price_exclusions),"ABDN.L, 2017-07-11, carried-forward price: zero volume and unchanged close on a day many stocks show the same; ABF.L, 2017-07-11, carried-forward price: zero volume and unchanged close on a day many stocks show the same; ADM.L, 2010-02-04, flat-bar bad print: large move with open = high = low = close, reversed next day; ADM.L, 2017-07-11, carried-forward price: zero volume and unchanged close on a day many stocks show the same; AUTO.L, 2017-07-11, carried-forward price: zero volume and unchanged close on a day many stocks show the same"
+dividends_loaded,error,pass,0,Dividend history was downloaded for at least 80 stocks,
+dividends_on_trading_days,warning,pass,0,Dividends inside a stock's price history fall on a day with a price (else they are lost),
+dividend_units_plausible,error,pass,0,No dividend is under 0.02% or over 50% of the previous close (signs of a pence/pound mix-up),
+dividends_annual_yield_high,warning,review,3,"Stock-years where dividends add up to over 20% of the price (special returns of capital, or a scaling error like the one corrected for Melrose)","AV.L, 2022, 0.311; ITH.L, 2024, 0.21; TSCO.L, 2021, 0.249"
+dividends_large_reported,warning,review,7,Dividends over 10% of the price (usually special dividends; listed for review),"AV.L, 2022-05-16, 0.25513214239261056; ICG.L, 2015-07-23, 0.13996575050449367; ICG.L, 2016-08-01, 0.11064574521087563; IHG.L, 2016-05-05, 0.15967156002781843; MNG.L, 2020-04-16, 0.10801369863013699"
+total_returns_cover_prices,error,pass,0,Exactly one total-return row per clean price,
+total_return_not_below_price_return,error,pass,0,Total return is never below price return (dividends cannot be negative),
 index_covers_start,error,pass,0,FTSE 100 index history starts in the first week of the window,
 index_is_recent,warning,pass,0,FTSE 100 index data is no more than 7 days old,
 constituents_count,error,pass,0,Between 98 and 102 constituents,

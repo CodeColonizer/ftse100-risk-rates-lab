@@ -14,23 +14,37 @@ It describes what happened; it makes no price predictions.
 |---|---|---|
 | 1 | Data pipeline and data quality | ✅ Complete ([findings](docs/phase1_findings.md)) |
 | 2 | Risk analytics: volatility, drawdown, beta, Sharpe, sector correlations, stress periods | ✅ Complete ([findings](docs/phase2_findings.md)) |
-| 3 | Event study of Bank Rate decisions | Planned |
+| 3 | Event study of Bank Rate decisions | ✅ Complete ([findings](docs/phase3_findings.md)) |
 | 4 | Daily automated refresh and a Streamlit app | Planned |
 
 ## Headline findings so far
 
 All figures cover January 2010 to November 2026 for today's FTSE 100 members.
 
+**Bank Rate decisions (Phase 3)**
+- **The FTSE 100 as a whole shows no reliable reaction** to hikes, cuts or
+  holds, and does not move more than usual on decision days.
+- **Sectors do: decision days bring sector rotation.** 9 of 11 sectors move
+  further from the market than on comparable days (1.3 to 1.9 times the normal
+  variance).
+- **The decision type does not predict the direction.** No sector's average
+  reaction to hikes, cuts or holds survives a correction for multiple tests,
+  checked against 2,000 sets of comparable non-decision days. Markets largely
+  anticipate decisions; the surprise, which free data cannot measure cleanly,
+  is what matters.
+
+![Sector volatility on decision days](outputs/figures/phase3_sector_volatility.png)
+
 **Risk (Phase 2)**
 - **Basic Materials and Energy are the riskiest sectors;** Consumer Staples the
   steadiest (29% and 27% annualised volatility versus 15%).
 - **Utilities, Health Care and Technology diversify best:** they move about
-  three-quarters as much as the market (beta 0.68–0.75), with correlations of
+  three-quarters as much as the market (beta 0.67–0.75), with correlations of
   about 0.6 with the FTSE 100.
 - **Diversification fails in a crash.** The average correlation between sectors
-  rose from 0.49 to 0.71 in the Covid crash, and every sector fell 21–48%.
-- **Rising rates split the market.** In 2022 Energy gained 35% while Real
-  Estate lost 36%, even though the index ended flat. In the September 2022
+  rose from 0.50 to 0.71 in the Covid crash, and every sector fell 20–48%.
+- **Rising rates split the market.** In 2022 Energy gained 40% while Real
+  Estate lost 33%, even though the index ended flat. In the September 2022
   mini-budget, Utilities (−13%) and Real Estate (−10%) fell hardest.
 
 ![Stress periods](outputs/figures/phase2_stress_periods.png)
@@ -38,16 +52,16 @@ All figures cover January 2010 to November 2026 for today's FTSE 100 members.
 **Data (Phase 1)**
 - **The data needed real cleaning.** Free Yahoo Finance data contained a
   missed share split, histories from before a company's London listing, bad
-  price prints on Bank Rate decision days, and three stocks priced in US
-  dollars or euros. Each was found by an automated check and fixed or flagged
-  with a written reason.
+  price prints on Bank Rate decision days, prices carried forward on a day
+  with no data, three stocks priced in US dollars or euros, and an "adjusted
+  close" that for London stocks barely includes dividends (found in Phase 3;
+  total returns are now rebuilt from dividend records). Each was found by a
+  check and fixed or flagged with a written reason.
 - **The Bank of England mostly holds.** Of 164 decisions since January 2010,
   138 were holds, 17 hikes and 9 cuts (two of them emergency Covid cuts). The
   small number of cuts will limit what Phase 3 can say about them.
 - **14 of today's 100 members listed after 2010**, so comparisons over the
   full period cover 86 stocks.
-
-Event-study findings will be added after Phase 3.
 
 ## Data
 
@@ -57,6 +71,7 @@ Event-study findings will be added after Phase 3.
 | Constituents with ICB sector, snapshot of 15 November 2026 | Wikipedia, checked against FTSE Russell's 2026 index reviews | Yes: [`data/reference/`](data/reference/) |
 | Every MPC Bank Rate decision (date, old rate, new rate, hike/cut/hold) | Bank of England MPC voting history | Yes: [`data/reference/`](data/reference/) |
 | Daily Bank Rate (the risk-free rate) | Bank of England database, series IUDBEDR | No: downloaded by the pipeline |
+| Dividends (amount and ex-dividend date) | Yahoo Finance | No: downloaded by the pipeline |
 | GBP/USD and GBP/EUR exchange rates | Yahoo Finance | No: downloaded by the pipeline |
 
 Full source details and retrieval dates: [`data/reference/SOURCES.md`](data/reference/SOURCES.md).
@@ -66,18 +81,21 @@ Table and column definitions: [`docs/data_dictionary.md`](docs/data_dictionary.m
 
 ### Phase 1: data pipeline
 
-1. **Download** prices, exchange rates and Bank of England data.
+1. **Download** prices, dividends, exchange rates and Bank of England data.
 2. **Raw layer:** load everything unchanged into a SQLite database.
 3. **Clean layer** (readable SQL in [`sql/clean/`](sql/clean/)):
    align to London trading days, remove duplicates, apply documented
-   corrections, convert non-sterling lines to pence, flag suspicious prices.
-4. **Data quality checks:** 33 checks (27 must pass, 6 report items for
+   corrections, convert non-sterling lines to pence, flag suspicious prices,
+   build total returns from close prices and dividends.
+4. **Data quality checks:** 40 checks (31 must pass, 9 report items for
    review), run by the pipeline and by `pytest`. Results:
    [`outputs/data_quality_report.csv`](outputs/data_quality_report.csv).
 
 ### Data cleaning decisions
 
-- Returns will use the **adjusted close** (includes dividends and splits).
+- Returns are **total returns**: (close + dividend on its ex-date) ÷ previous
+  close − 1. Yahoo's adjusted close is not used for returns, because for London
+  stocks it barely reflects dividends.
 - **Missing days are left missing**, never filled with the previous price,
   which would invent 0% returns and understate risk.
 - A price is **removed only for a clear reason** (a bad print, a known data
@@ -88,8 +106,8 @@ Table and column definitions: [`docs/data_dictionary.md`](docs/data_dictionary.m
 
 ### Phase 2: risk analytics
 
-- **Returns:** simple daily returns from the adjusted close; a return needs
-  prices on two consecutive trading days.
+- **Returns:** simple daily total returns (price plus dividends); a return
+  needs prices on two consecutive trading days.
 - **Volatility** = daily standard deviation × √252. **Annual return** =
   compound growth rate. **Maximum drawdown** = largest fall from a peak, with
   peak, trough and recovery dates.
@@ -105,6 +123,21 @@ Table and column definitions: [`docs/data_dictionary.md`](docs/data_dictionary.m
 - **Robustness:** results recalculated without the days flagged in Phase 1, and
   with sectors built only from stocks that have the full history.
 
+### Phase 3: event study of Bank Rate decisions
+
+- **153 decisions** (December 2010 to November 2026): 17 hikes, 7 scheduled
+  cuts, 2 emergency cuts and 127 holds.
+- **Abnormal returns:** the FTSE 100 against its own normal average
+  (market level); sectors and stocks against what the FTSE 100's move predicts
+  (market model). Normal behaviour is estimated over trading days −250 to −11,
+  leaving out the days around other decisions.
+- **Windows:** announcement day, days −1 to +1, days 0 to +5.
+- **Tests:** a placebo test against 2,000 sets of comparable non-decision
+  Thursdays (same month and week of the month, studentised), plus t-tests and
+  Wilcoxon tests; Benjamini–Hochberg correction for 234 market and sector
+  tests; a test of whether moves are bigger than usual in either direction;
+  a check of how often each test gives false alarms on placebo days.
+
 Results tables: [`outputs/tables/`](outputs/tables/).
 
 Each decision, and why, is in [`docs/decisions.md`](docs/decisions.md).
@@ -119,7 +152,10 @@ Each decision, and why, is in [`docs/decisions.md`](docs/decisions.md).
   returns include dividends.
 - **Equal-weighted sectors:** unlike the index, sectors give every member the
   same weight; Energy and Telecoms have only three members each.
-- **Unofficial price data:** Yahoo Finance is free but not audited.
+- **Unofficial price data:** Yahoo Finance is free but not audited; dividends
+  are rebuilt from its records and checked for scale.
+- **No measure of the rate surprise:** the event study groups decisions by
+  type (hike, cut, hold), not by how unexpected they were.
 - **No predictions:** this project describes past risk and past reactions; it
   does not forecast prices.
 
@@ -142,9 +178,9 @@ python run_pipeline.py
 pytest
 ```
 
-`run_pipeline.py` downloads all data (about a minute), builds
-`data/ftse_lab.db`, runs the quality checks, calculates the risk analytics,
-and saves charts to `outputs/figures/` and tables to `outputs/tables/`. If a
+`run_pipeline.py` downloads all data (one to two minutes), builds
+`data/ftse_lab.db`, runs the quality checks, calculates the risk analytics and
+the event study, and saves charts to `outputs/figures/` and tables to `outputs/tables/`. If a
 required data quality check fails, it stops before the analytics and exits
 with an error.
 
@@ -156,7 +192,7 @@ Options:
 
 ```
 run_pipeline.py        one command to run everything
-src/ftselab/           download, database, quality check, risk and chart code
+src/ftselab/           download, database, quality checks, risk, event study and charts
 sql/clean/             clean-layer SQL
 data/reference/        small committed reference files and their sources
 tests/                 unit tests (synthetic data), data quality and output tests

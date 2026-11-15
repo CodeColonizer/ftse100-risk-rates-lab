@@ -43,12 +43,13 @@ Why: no server needed, a single file, and the same pattern as my previous
 project. Keeping the raw layer untouched means any cleaning rule can be
 changed and rerun without downloading again. SQL makes the rules easy to read.
 
-**7. Adjusted close for returns; both close and adjusted close kept.**
-Why: adjusted close includes dividends and splits, so returns reflect what a
-shareholder earned. The FTSE 100 index (`^FTSE`) is a price index without
-dividends, which slightly understates the market's return when we calculate
-beta and excess returns. Noted as a limitation; a total-return index is not
-freely available.
+**7. Total returns (price plus dividends); both close and adjusted close kept.**
+Originally: Yahoo's adjusted close, on the assumption that it includes
+dividends. **Superseded by decision 25:** for London stocks it barely does, so
+returns are now built from the close plus dividends. Why total returns: they
+reflect what a shareholder earned. The FTSE 100 index (`^FTSE`) is a price
+index without dividends, which understates the market's return; a
+total-return index is not freely available. Noted as a limitation.
 
 **8. Lines quoted in USD or EUR are converted to pence.**
 Why: Yahoo serves Compass and InterContinental Hotels in US dollars (for the
@@ -158,3 +159,86 @@ forward-filling (decision 9). Rule: if 10 or more stocks are stale on the same
 day, those stale rows are removed and logged; a single illiquid stock with a
 quiet day is still kept. A required check now fails if such a day reappears.
 Effect on results: no sector figure changes by more than 0.01.
+
+## Phase 3: event study of Bank Rate decisions (November 2026)
+
+**25. Build total returns from close + dividends; do not trust Yahoo's adjusted
+close for London stocks (a Phase 1 fix found during Phase 3).**
+While checking the event study, I found that Yahoo's adjusted close for HSBC
+differs from its raw close by under 1% over 16 years, although HSBC paid
+several percent a year in dividends. Yahoo's dividend records themselves are
+correct (yields of 1–4% per payment), so the pipeline now downloads them and
+calculates total return = (close + dividend on its ex-date) / previous close
+− 1, in SQL (`sql/clean/05_total_return.sql`). One scaling error was found and
+corrected in `price_corrections.csv`: Melrose dividends before its January
+2016 share consolidation were about 7 times too large (scaled by Yahoo's own
+7/48 ratio). New checks: a required check that no dividend is under 0.02% or
+over 50% of the price (a pence/pound mix-up), and review lists of dividends
+over 10% and stock-years over 20% (special returns of capital such as Aviva
+2022 and Tesco 2021). Effect: annual returns rose 3–6 points per sector and
+Sharpe ratios with them; volatility, beta and correlation barely moved. The
+Phase 2 findings were corrected and say so at the top.
+
+**26. Two levels of question, two models.**
+A Bank Rate decision hits the whole market, so a market-model abnormal return
+(stock minus what the FTSE 100 predicts) cannot show a market-wide reaction:
+it only shows rotation between sectors. So: (1) market level, the FTSE 100
+against its own normal average return (constant-mean model); (2) sector and
+stock level, the market model against the FTSE 100.
+
+**27. Estimation window: trading days −250 to −11, leaving out other decisions.**
+Why: about one year of normal behaviour, ending two weeks before the event so
+any build-up is not treated as normal. Days −1 to +5 around every other
+decision are left out, because the MPC met every 4–6 weeks and those days are
+not "normal". Parameters are fixed at day 0 for the whole event window. The
+first 11 decisions of 2010 have too little history and are excluded.
+
+**28. Event windows: day 0, days −1 to +1, days 0 to +5.**
+Why: the decision is announced at noon, so day 0's close carries the news;
+−1 to +1 allows for leaks and slow reactions; 0 to +5 tests for drift.
+
+**29. One number per event, not per stock.**
+Stocks react on the same day, so their returns are correlated. Treating 100
+stocks × 17 hikes as 1,700 independent observations would overstate
+significance. Tests use the sector portfolio's return for each event.
+
+**30. Placebo test as the primary test, matched to the calendar and
+studentised.** Three refinements, each found by checking the results:
+- *Placebo days are Thursdays without a decision* (156 of 164 decisions were
+  on Thursdays), drawn 2,000 times.
+- *Matched on month and week of the month.* Company results and big
+  ex-dividend dates cluster in early February, May, August and November, the
+  same weeks as many MPC meetings. Matching stops those from being mistaken
+  for rate effects.
+- *Compared with the placebo distribution, not with zero.* 73% of dividend
+  ex-dates fall on Thursdays, so the price index averages −5.4 basis points on
+  Thursdays against +0.4 to +8.0 on other days. Comparable days are therefore
+  not centred on zero.
+- *Studentised (compares t-statistics, not raw averages).* Decision days are
+  more volatile than normal days (decision 32), which on its own makes raw
+  averages look "significant". With the studentised version, 3.0% of market
+  and sector tests fall below p = 0.05, close to the 5% expected by chance;
+  with raw averages it was 9.8%.
+The ordinary t-test is reported too, but a calibration check showed it
+rejects 7% (hike-sized samples) to 17% (hold-sized samples) of placebo samples
+at the 5% level, so it is not used for conclusions.
+
+**31. Correct for multiple testing (Benjamini–Hochberg, 10% false discovery
+rate).** Why: 234 market and sector tests (13 series × 6 groups × 3 windows)
+would produce about 12 "significant" results at p < 0.05 by chance alone.
+Stocks (1,776 tests) are a separate family and only reported as a whole.
+
+**32. Test whether decisions make prices move more, not only in which
+direction.** Why: markets anticipate most decisions, so the direction of a
+reaction depends on the surprise, which decision type alone does not capture.
+A bigger-than-usual move in either direction (variance ratio, against the same
+matched placebo days) shows whether decisions carry news at all.
+
+**33. Keep the March 2020 emergency cuts separate.** They coincided with the
+Covid crash, so any reaction cannot be attributed to the rate cut. Main cut
+results use the 7 scheduled cuts; a separate group includes all 9.
+
+**34. No measure of the surprise.** A proper surprise measure needs
+market-implied rate expectations (e.g. overnight index swaps), which are not
+freely available as a clean daily series. This is the main limitation and the
+natural next step.

@@ -91,3 +91,20 @@ STRESS_PERIODS = [
                "when the Chancellor was replaced and the Bank's emergency gilt buying ended.",
     },
 ]
+
+# --- Phase 3: event study of Bank Rate decisions ----------------------------------------
+# Estimation window for normal returns: trading days -250 to -11 before the event.
+EVENT_EST_FIRST = 250
+EVENT_EST_LAST = 11
+EVENT_MIN_EST_OBS = 150      # events with less estimation data are left out
+# Days around every real decision that are kept out of estimation windows and
+# out of the placebo pool, so one decision cannot contaminate another.
+EVENT_EXCLUDE_BEFORE, EVENT_EXCLUDE_AFTER = 1, 5
+# Event windows (first day, last day) relative to the announcement day (day 0).
+EVENT_WINDOWS = {"day0": (0, 0), "m1_p1": (-1, 1), "d0_p5": (0, 5)}
+EVENT_PATH_DAYS = (-5, 5)    # range of days shown in the average-path chart
+PLACEBO_DRAWS = 2000
+PLACEBO_WEEKDAY = 3          # Thursday: 156 of 164 decisions fell on a Thursday
+RANDOM_SEED = 2026
+FDR_LEVEL = 0.10             # Benjamini-Hochberg false discovery rate
+EVENT_MIN_EVENTS_STOCK = 5   # stock-level results need at least this many events
