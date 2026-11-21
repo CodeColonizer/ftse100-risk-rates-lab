@@ -1,0 +1,430 @@
+kind,series,group,day,mean_car_from_start,se,n_events
+index,^FTSE,hike,-5,-0.000341458,0.00181233,17
+index,^FTSE,hike,-4,-0.00175382,0.00282474,17
+index,^FTSE,hike,-3,-0.00217199,0.00384512,17
+index,^FTSE,hike,-2,-0.00112927,0.00461803,17
+index,^FTSE,hike,-1,-0.000621005,0.00424015,17
+index,^FTSE,hike,0,-0.00353142,0.00586349,17
+index,^FTSE,hike,1,-0.00545112,0.0068102,17
+index,^FTSE,hike,2,-0.00497306,0.00647284,17
+index,^FTSE,hike,3,-0.00402943,0.00652713,17
+index,^FTSE,hike,4,0.000513427,0.00673148,17
+index,^FTSE,hike,5,-0.00131195,0.0080091,17
+index,^FTSE,cut,-5,0.00127323,0.00216566,7
+index,^FTSE,cut,-4,0.00246361,0.00340272,7
+index,^FTSE,cut,-3,0.00422435,0.00365052,7
+index,^FTSE,cut,-2,0.00125383,0.00425111,7
+index,^FTSE,cut,-1,0.00396137,0.0052584,7
+index,^FTSE,cut,0,0.00506727,0.00399644,7
+index,^FTSE,cut,1,0.00338692,0.00441525,7
+index,^FTSE,cut,2,0.00329179,0.0053858,7
+index,^FTSE,cut,3,0.00302823,0.00623396,7
+index,^FTSE,cut,4,0.00564192,0.00538467,7
+index,^FTSE,cut,5,0.00676504,0.00505555,7
+index,^FTSE,hold,-5,-0.000605656,0.000822897,127
+index,^FTSE,hold,-4,-0.00106898,0.00116038,127
+index,^FTSE,hold,-3,-0.00148195,0.00147257,127
+index,^FTSE,hold,-2,-0.000138502,0.00179505,127
+index,^FTSE,hold,-1,0.000293973,0.00198713,127
+index,^FTSE,hold,0,0.000637353,0.00226081,127
+index,^FTSE,hold,1,-0.00134966,0.00233715,127
+index,^FTSE,hold,2,-0.00227155,0.00272574,127
+index,^FTSE,hold,3,-0.000598849,0.00277717,127
+index,^FTSE,hold,4,-0.00164775,0.00296844,127
+index,^FTSE,hold,5,-0.00247063,0.00289723,127
+sector,Basic Materials,hike,-5,0.000323959,0.00389694,17
+sector,Consumer Discretionary,hike,-5,0.000240126,0.00205504,17
+sector,Consumer Staples,hike,-5,-0.00135003,0.00109919,17
+sector,Energy,hike,-5,-0.00215598,0.00394956,17
+sector,Financials,hike,-5,0.000413655,0.00182157,17
+sector,Health Care,hike,-5,-0.00369136,0.00329119,17
+sector,Industrials,hike,-5,0.00227456,0.00204497,17
+sector,Real Estate,hike,-5,-0.000980093,0.00239158,17
+sector,Technology,hike,-5,0.000561806,0.00213003,17
+sector,Telecommunications,hike,-5,-0.00751707,0.00531156,17
+sector,Utilities,hike,-5,0.0013045,0.00186074,17
+sector,All stocks (equal weight),hike,-5,-5.30123e-05,0.000982326,17
+sector,Basic Materials,hike,-4,-0.00583585,0.00597632,17
+sector,Consumer Discretionary,hike,-4,0.00113859,0.00226085,17
+sector,Consumer Staples,hike,-4,-0.000557695,0.00197195,17
+sector,Energy,hike,-4,-0.00248554,0.00381088,17
+sector,Financials,hike,-4,-0.00123413,0.00301486,17
+sector,Health Care,hike,-4,-0.00370088,0.00392333,17
+sector,Industrials,hike,-4,0.00197521,0.0025902,17
+sector,Real Estate,hike,-4,-0.00052998,0.00393495,17
+sector,Technology,hike,-4,0.000619482,0.00247767,17
+sector,Telecommunications,hike,-4,-0.0023574,0.0059036,17
+sector,Utilities,hike,-4,0.00129273,0.00330634,17
+sector,All stocks (equal weight),hike,-4,-0.000560935,0.00138566,17
+sector,Basic Materials,hike,-3,-0.00740208,0.00607761,17
+sector,Consumer Discretionary,hike,-3,0.00194177,0.00304118,17
+sector,Consumer Staples,hike,-3,0.000556986,0.00235517,17
+sector,Energy,hike,-3,-0.00784377,0.00584824,17
+sector,Financials,hike,-3,0.000936502,0.00320815,17
+sector,Health Care,hike,-3,-0.00446404,0.00410884,17
+sector,Industrials,hike,-3,0.00173334,0.0035712,17
+sector,Real Estate,hike,-3,-0.000657308,0.00417048,17
+sector,Technology,hike,-3,0.000521849,0.00471817,17
+sector,Telecommunications,hike,-3,-0.0007996,0.00716696,17
+sector,Utilities,hike,-3,-9.02643e-05,0.00329511,17
+sector,All stocks (equal weight),hike,-3,-0.000122025,0.00162119,17
+sector,Basic Materials,hike,-2,-0.0115384,0.00530248,17
+sector,Consumer Discretionary,hike,-2,0.00108857,0.00344337,17
+sector,Consumer Staples,hike,-2,8.74816e-05,0.00242189,17
+sector,Energy,hike,-2,-0.00221967,0.00653474,17
+sector,Financials,hike,-2,0.000852133,0.00297242,17
+sector,Health Care,hike,-2,-0.00449681,0.00399749,17
+sector,Industrials,hike,-2,-0.00182399,0.00398154,17
+sector,Real Estate,hike,-2,-0.00976299,0.00682371,17
+sector,Technology,hike,-2,-0.00326783,0.00574295,17
+sector,Telecommunications,hike,-2,-0.00411986,0.00689534,17
+sector,Utilities,hike,-2,-0.00264204,0.00484403,17
+sector,All stocks (equal weight),hike,-2,-0.0019604,0.00184139,17
+sector,Basic Materials,hike,-1,-0.0146383,0.0054088,17
+sector,Consumer Discretionary,hike,-1,-0.000962175,0.00497583,17
+sector,Consumer Staples,hike,-1,0.00168168,0.0036285,17
+sector,Energy,hike,-1,-0.00832461,0.00913744,17
+sector,Financials,hike,-1,0.00345324,0.00415683,17
+sector,Health Care,hike,-1,-0.00162171,0.00491918,17
+sector,Industrials,hike,-1,-0.000772216,0.00377215,17
+sector,Real Estate,hike,-1,-0.010582,0.00902847,17
+sector,Technology,hike,-1,0.00100985,0.00618602,17
+sector,Telecommunications,hike,-1,-0.00575958,0.00793717,17
+sector,Utilities,hike,-1,-0.00486652,0.00463397,17
+sector,All stocks (equal weight),hike,-1,-0.00151584,0.00245858,17
+sector,Basic Materials,hike,0,-0.0137119,0.00630034,17
+sector,Consumer Discretionary,hike,0,-0.000207154,0.00552017,17
+sector,Consumer Staples,hike,0,0.00187209,0.00379846,17
+sector,Energy,hike,0,-0.00618138,0.0102323,17
+sector,Financials,hike,0,0.00309443,0.00478877,17
+sector,Health Care,hike,0,0.000132342,0.00507109,17
+sector,Industrials,hike,0,-0.00204293,0.00500391,17
+sector,Real Estate,hike,0,-0.00880867,0.0101246,17
+sector,Technology,hike,0,0.00137037,0.00795999,17
+sector,Telecommunications,hike,0,-0.0101457,0.00950653,17
+sector,Utilities,hike,0,-0.00497256,0.00411103,17
+sector,All stocks (equal weight),hike,0,-0.0015275,0.00311042,17
+sector,Basic Materials,hike,1,-0.0110189,0.00687876,17
+sector,Consumer Discretionary,hike,1,0.000160103,0.00558975,17
+sector,Consumer Staples,hike,1,0.00277884,0.00459383,17
+sector,Energy,hike,1,-0.0119415,0.0135625,17
+sector,Financials,hike,1,0.00236928,0.00523151,17
+sector,Health Care,hike,1,0.00386888,0.00476084,17
+sector,Industrials,hike,1,-0.00250427,0.00477721,17
+sector,Real Estate,hike,1,-0.020451,0.0112674,17
+sector,Technology,hike,1,-0.000120419,0.00807611,17
+sector,Telecommunications,hike,1,-0.0116418,0.00900579,17
+sector,Utilities,hike,1,-0.00862265,0.00468505,17
+sector,All stocks (equal weight),hike,1,-0.00225245,0.0031874,17
+sector,Basic Materials,hike,2,-0.0105411,0.00748966,17
+sector,Consumer Discretionary,hike,2,-0.000543889,0.00464812,17
+sector,Consumer Staples,hike,2,0.00297803,0.00448087,17
+sector,Energy,hike,2,-0.00870437,0.0128861,17
+sector,Financials,hike,2,0.000986821,0.00455373,17
+sector,Health Care,hike,2,0.00143495,0.00467569,17
+sector,Industrials,hike,2,-0.00265124,0.00436132,17
+sector,Real Estate,hike,2,-0.0254597,0.0118194,17
+sector,Technology,hike,2,-0.0030677,0.00765804,17
+sector,Telecommunications,hike,2,-0.00894911,0.0101279,17
+sector,Utilities,hike,2,-0.0105698,0.00578513,17
+sector,All stocks (equal weight),hike,2,-0.00310773,0.0029066,17
+sector,Basic Materials,hike,3,-0.0102855,0.00724982,17
+sector,Consumer Discretionary,hike,3,-0.00226313,0.00426165,17
+sector,Consumer Staples,hike,3,0.0027959,0.00453682,17
+sector,Energy,hike,3,-0.00698534,0.0130763,17
+sector,Financials,hike,3,0.000638473,0.00436741,17
+sector,Health Care,hike,3,0.00019692,0.00501078,17
+sector,Industrials,hike,3,-0.00447583,0.00397338,17
+sector,Real Estate,hike,3,-0.0315789,0.0136984,17
+sector,Technology,hike,3,-0.00869602,0.00702315,17
+sector,Telecommunications,hike,3,-0.0137752,0.0095912,17
+sector,Utilities,hike,3,-0.0112357,0.00905748,17
+sector,All stocks (equal weight),hike,3,-0.00447261,0.00270012,17
+sector,Basic Materials,hike,4,-0.00879849,0.00915858,17
+sector,Consumer Discretionary,hike,4,-0.000652977,0.00388781,17
+sector,Consumer Staples,hike,4,0.000935595,0.00490049,17
+sector,Energy,hike,4,-0.00360933,0.0131236,17
+sector,Financials,hike,4,0.00181407,0.00519424,17
+sector,Health Care,hike,4,-0.000581425,0.00669804,17
+sector,Industrials,hike,4,-0.00238311,0.00374987,17
+sector,Real Estate,hike,4,-0.0245624,0.0107724,17
+sector,Technology,hike,4,-0.00309585,0.00761573,17
+sector,Telecommunications,hike,4,-0.0178873,0.0104436,17
+sector,Utilities,hike,4,-0.0110535,0.00822309,17
+sector,All stocks (equal weight),hike,4,-0.00315774,0.00272211,17
+sector,Basic Materials,hike,5,-0.0119685,0.0111009,17
+sector,Consumer Discretionary,hike,5,0.0024072,0.00450872,17
+sector,Consumer Staples,hike,5,0.00133152,0.00560367,17
+sector,Energy,hike,5,-0.00444174,0.0133915,17
+sector,Financials,hike,5,0.00446126,0.00552108,17
+sector,Health Care,hike,5,0.00331499,0.00860625,17
+sector,Industrials,hike,5,-0.00170202,0.00454923,17
+sector,Real Estate,hike,5,-0.0240423,0.012233,17
+sector,Technology,hike,5,-0.00249262,0.00830442,17
+sector,Telecommunications,hike,5,-0.0165002,0.0112268,17
+sector,Utilities,hike,5,-0.0122816,0.0101557,17
+sector,All stocks (equal weight),hike,5,-0.00192982,0.00327273,17
+sector,Basic Materials,cut,-5,-0.00446398,0.00794013,7
+sector,Consumer Discretionary,cut,-5,-4.92823e-05,0.00253752,7
+sector,Consumer Staples,cut,-5,0.00471385,0.00245088,7
+sector,Energy,cut,-5,-0.0021001,0.00514354,7
+sector,Financials,cut,-5,-0.00246201,0.00206594,7
+sector,Health Care,cut,-5,-0.00241114,0.00584515,7
+sector,Industrials,cut,-5,0.00149216,0.00363646,7
+sector,Real Estate,cut,-5,-0.00208201,0.00415666,7
+sector,Technology,cut,-5,0.00335681,0.00494927,7
+sector,Telecommunications,cut,-5,0.0018305,0.00459156,7
+sector,Utilities,cut,-5,-0.00236568,0.00434207,7
+sector,All stocks (equal weight),cut,-5,-0.000401989,0.00174494,7
+sector,Basic Materials,cut,-4,-0.00482633,0.00596716,7
+sector,Consumer Discretionary,cut,-4,0.00572844,0.0036015,7
+sector,Consumer Staples,cut,-4,0.0028734,0.00257668,7
+sector,Energy,cut,-4,-0.00898146,0.00501974,7
+sector,Financials,cut,-4,0.000319007,0.00168744,7
+sector,Health Care,cut,-4,-0.000928264,0.00660752,7
+sector,Industrials,cut,-4,0.00387794,0.00264341,7
+sector,Real Estate,cut,-4,-0.000746107,0.0065933,7
+sector,Technology,cut,-4,0.00385669,0.00489597,7
+sector,Telecommunications,cut,-4,0.00314541,0.00305566,7
+sector,Utilities,cut,-4,-0.00128284,0.00549744,7
+sector,All stocks (equal weight),cut,-4,0.00138496,0.00199591,7
+sector,Basic Materials,cut,-3,-0.00478281,0.00811888,7
+sector,Consumer Discretionary,cut,-3,0.00510235,0.00374433,7
+sector,Consumer Staples,cut,-3,0.00145014,0.0019703,7
+sector,Energy,cut,-3,-0.0155597,0.007558,7
+sector,Financials,cut,-3,-0.000404954,0.00220817,7
+sector,Health Care,cut,-3,-0.00237993,0.00737868,7
+sector,Industrials,cut,-3,0.00159002,0.00437692,7
+sector,Real Estate,cut,-3,-0.00242893,0.00664454,7
+sector,Technology,cut,-3,0.00491097,0.00579614,7
+sector,Telecommunications,cut,-3,0.00873264,0.0043631,7
+sector,Utilities,cut,-3,-0.00349763,0.0058071,7
+sector,All stocks (equal weight),cut,-3,0.000313876,0.00214368,7
+sector,Basic Materials,cut,-2,0.00165539,0.00939632,7
+sector,Consumer Discretionary,cut,-2,0.0097737,0.0043439,7
+sector,Consumer Staples,cut,-2,0.00573255,0.00238074,7
+sector,Energy,cut,-2,-0.0129198,0.0121217,7
+sector,Financials,cut,-2,0.00534224,0.00270829,7
+sector,Health Care,cut,-2,-0.00548521,0.00914347,7
+sector,Industrials,cut,-2,0.00492136,0.00345126,7
+sector,Real Estate,cut,-2,0.00237142,0.00754208,7
+sector,Technology,cut,-2,0.00316231,0.00497109,7
+sector,Telecommunications,cut,-2,0.00524105,0.00300492,7
+sector,Utilities,cut,-2,-0.00255717,0.00457332,7
+sector,All stocks (equal weight),cut,-2,0.00397323,0.00161409,7
+sector,Basic Materials,cut,-1,0.00188092,0.00960121,7
+sector,Consumer Discretionary,cut,-1,0.00919934,0.00532083,7
+sector,Consumer Staples,cut,-1,0.00239108,0.00473425,7
+sector,Energy,cut,-1,-0.00921843,0.013749,7
+sector,Financials,cut,-1,0.00784787,0.00286792,7
+sector,Health Care,cut,-1,-0.0100943,0.010586,7
+sector,Industrials,cut,-1,0.0021176,0.00474547,7
+sector,Real Estate,cut,-1,-0.000137843,0.0114978,7
+sector,Technology,cut,-1,7.08487e-05,0.00492663,7
+sector,Telecommunications,cut,-1,0.00419578,0.00623346,7
+sector,Utilities,cut,-1,-0.00372655,0.00702346,7
+sector,All stocks (equal weight),cut,-1,0.00324193,0.00166174,7
+sector,Basic Materials,cut,0,0.005166,0.00875612,7
+sector,Consumer Discretionary,cut,0,0.014403,0.00709225,7
+sector,Consumer Staples,cut,0,0.00281514,0.00289878,7
+sector,Energy,cut,0,-0.00833838,0.0135653,7
+sector,Financials,cut,0,0.0108731,0.0035173,7
+sector,Health Care,cut,0,-0.00551832,0.0112205,7
+sector,Industrials,cut,0,0.00662068,0.00794347,7
+sector,Real Estate,cut,0,0.00141898,0.00977244,7
+sector,Technology,cut,0,-0.00135767,0.00660549,7
+sector,Telecommunications,cut,0,-0.00563952,0.0108141,7
+sector,Utilities,cut,0,-0.0115412,0.0062779,7
+sector,All stocks (equal weight),cut,0,0.00536639,0.00219736,7
+sector,Basic Materials,cut,1,0.00818863,0.0100875,7
+sector,Consumer Discretionary,cut,1,0.0115009,0.00770268,7
+sector,Consumer Staples,cut,1,0.00153306,0.00280656,7
+sector,Energy,cut,1,-0.0087324,0.0140782,7
+sector,Financials,cut,1,0.00856727,0.00650162,7
+sector,Health Care,cut,1,-0.00242312,0.0115323,7
+sector,Industrials,cut,1,0.00342765,0.00847581,7
+sector,Real Estate,cut,1,0.00302704,0.00858433,7
+sector,Technology,cut,1,-0.00567269,0.00722235,7
+sector,Telecommunications,cut,1,-0.00149291,0.00830371,7
+sector,Utilities,cut,1,-0.0104373,0.00766573,7
+sector,All stocks (equal weight),cut,1,0.00414672,0.00302763,7
+sector,Basic Materials,cut,2,0.0110572,0.0133503,7
+sector,Consumer Discretionary,cut,2,0.0105977,0.00936641,7
+sector,Consumer Staples,cut,2,-0.0047534,0.00343359,7
+sector,Energy,cut,2,-0.00630177,0.0139545,7
+sector,Financials,cut,2,0.0130291,0.00751495,7
+sector,Health Care,cut,2,-0.00126233,0.0108093,7
+sector,Industrials,cut,2,0.0033122,0.00926298,7
+sector,Real Estate,cut,2,-0.000523558,0.00865934,7
+sector,Technology,cut,2,-0.00837664,0.00576132,7
+sector,Telecommunications,cut,2,-0.0015737,0.0102773,7
+sector,Utilities,cut,2,-0.0170388,0.008527,7
+sector,All stocks (equal weight),cut,2,0.00415325,0.00328367,7
+sector,Basic Materials,cut,3,0.00513857,0.0164716,7
+sector,Consumer Discretionary,cut,3,0.0113705,0.0110679,7
+sector,Consumer Staples,cut,3,-0.0048308,0.0049562,7
+sector,Energy,cut,3,-0.00357049,0.0146717,7
+sector,Financials,cut,3,0.0138811,0.0078143,7
+sector,Health Care,cut,3,0.00120282,0.00469937,7
+sector,Industrials,cut,3,0.00867488,0.010213,7
+sector,Real Estate,cut,3,-0.00725499,0.00842445,7
+sector,Technology,cut,3,-0.0109753,0.00842934,7
+sector,Telecommunications,cut,3,-0.00504634,0.0121431,7
+sector,Utilities,cut,3,-0.0207654,0.00981534,7
+sector,All stocks (equal weight),cut,3,0.00442411,0.00375093,7
+sector,Basic Materials,cut,4,0.000725444,0.0171301,7
+sector,Consumer Discretionary,cut,4,0.0116137,0.0125225,7
+sector,Consumer Staples,cut,4,-0.00737306,0.00513958,7
+sector,Energy,cut,4,-0.00413397,0.0158932,7
+sector,Financials,cut,4,0.0139018,0.00864666,7
+sector,Health Care,cut,4,0.00254065,0.00655396,7
+sector,Industrials,cut,4,0.00968991,0.00948531,7
+sector,Real Estate,cut,4,-0.00979749,0.0102543,7
+sector,Technology,cut,4,-0.0132216,0.00927079,7
+sector,Telecommunications,cut,4,-0.000652306,0.0109716,7
+sector,Utilities,cut,4,-0.0241735,0.00971819,7
+sector,All stocks (equal weight),cut,4,0.00386962,0.00445096,7
+sector,Basic Materials,cut,5,-0.000247695,0.0177112,7
+sector,Consumer Discretionary,cut,5,0.014327,0.0125634,7
+sector,Consumer Staples,cut,5,-0.00493005,0.00502734,7
+sector,Energy,cut,5,-0.00178352,0.0130797,7
+sector,Financials,cut,5,0.01457,0.00804396,7
+sector,Health Care,cut,5,0.00885374,0.00638853,7
+sector,Industrials,cut,5,0.0107932,0.00952821,7
+sector,Real Estate,cut,5,-0.00385506,0.0103304,7
+sector,Technology,cut,5,-0.0118123,0.00840614,7
+sector,Telecommunications,cut,5,0.00289327,0.00971591,7
+sector,Utilities,cut,5,-0.0158296,0.00997968,7
+sector,All stocks (equal weight),cut,5,0.00609167,0.00449077,7
+sector,Basic Materials,hold,-5,-0.00143461,0.00115842,127
+sector,Consumer Discretionary,hold,-5,0.00015201,0.000710455,127
+sector,Consumer Staples,hold,-5,-0.000241691,0.000442881,127
+sector,Energy,hold,-5,9.35965e-05,0.00106634,127
+sector,Financials,hold,-5,0.000200078,0.000444578,127
+sector,Health Care,hold,-5,0.000320936,0.00081027,127
+sector,Industrials,hold,-5,6.24659e-05,0.000557813,127
+sector,Real Estate,hold,-5,-0.000723319,0.000658856,127
+sector,Technology,hold,-5,-0.00018826,0.000853011,127
+sector,Telecommunications,hold,-5,0.00218381,0.00102501,127
+sector,Utilities,hold,-5,-1.13174e-05,0.000787883,127
+sector,All stocks (equal weight),hold,-5,2.02271e-05,0.000268097,127
+sector,Basic Materials,hold,-4,-0.00318031,0.0015698,127
+sector,Consumer Discretionary,hold,-4,0.00167668,0.00101068,127
+sector,Consumer Staples,hold,-4,-0.000566596,0.000698666,127
+sector,Energy,hold,-4,-0.000121342,0.00149326,127
+sector,Financials,hold,-4,0.00110009,0.000649785,127
+sector,Health Care,hold,-4,1.09983e-05,0.00112993,127
+sector,Industrials,hold,-4,-0.000508203,0.000700438,127
+sector,Real Estate,hold,-4,0.000740306,0.00103834,127
+sector,Technology,hold,-4,0.00183713,0.00105664,127
+sector,Telecommunications,hold,-4,0.00465564,0.00172893,127
+sector,Utilities,hold,-4,-0.000274094,0.00113242,127
+sector,All stocks (equal weight),hold,-4,0.000444,0.000392202,127
+sector,Basic Materials,hold,-3,-0.00321567,0.00201618,127
+sector,Consumer Discretionary,hold,-3,0.00151553,0.00121107,127
+sector,Consumer Staples,hold,-3,-0.00111265,0.000908594,127
+sector,Energy,hold,-3,-0.000595794,0.00217424,127
+sector,Financials,hold,-3,0.000298462,0.0007483,127
+sector,Health Care,hold,-3,0.000820404,0.00141859,127
+sector,Industrials,hold,-3,-0.000216975,0.000865305,127
+sector,Real Estate,hold,-3,0.00139878,0.00125279,127
+sector,Technology,hold,-3,0.00233541,0.00127994,127
+sector,Telecommunications,hold,-3,0.00501955,0.0018552,127
+sector,Utilities,hold,-3,-0.000854048,0.00150886,127
+sector,All stocks (equal weight),hold,-3,0.000254173,0.000470244,127
+sector,Basic Materials,hold,-2,-0.00439821,0.00234153,127
+sector,Consumer Discretionary,hold,-2,3.0645e-06,0.00144707,127
+sector,Consumer Staples,hold,-2,-0.000373769,0.0011207,127
+sector,Energy,hold,-2,0.00122846,0.00279486,127
+sector,Financials,hold,-2,-0.000113741,0.000922586,127
+sector,Health Care,hold,-2,0.000606068,0.00168803,127
+sector,Industrials,hold,-2,-0.00142681,0.00104608,127
+sector,Real Estate,hold,-2,0.00213704,0.00145598,127
+sector,Technology,hold,-2,0.00181496,0.00172807,127
+sector,Telecommunications,hold,-2,0.00490559,0.00227539,127
+sector,Utilities,hold,-2,-0.00197474,0.00174687,127
+sector,All stocks (equal weight),hold,-2,-0.000324737,0.000570889,127
+sector,Basic Materials,hold,-1,-0.00263601,0.0027548,127
+sector,Consumer Discretionary,hold,-1,0.000375068,0.00167637,127
+sector,Consumer Staples,hold,-1,-0.000987883,0.00131017,127
+sector,Energy,hold,-1,0.000777975,0.00288274,127
+sector,Financials,hold,-1,0.000544719,0.00109419,127
+sector,Health Care,hold,-1,0.00121048,0.00185319,127
+sector,Industrials,hold,-1,-0.00132007,0.00118114,127
+sector,Real Estate,hold,-1,0.00178709,0.00154794,127
+sector,Technology,hold,-1,0.00060063,0.00204914,127
+sector,Telecommunications,hold,-1,0.00500138,0.00245335,127
+sector,Utilities,hold,-1,-0.00274766,0.00168113,127
+sector,All stocks (equal weight),hold,-1,-0.000119631,0.000632483,127
+sector,Basic Materials,hold,0,-0.00151348,0.00305212,127
+sector,Consumer Discretionary,hold,0,0.000826157,0.00191212,127
+sector,Consumer Staples,hold,0,-0.00097905,0.00133647,127
+sector,Energy,hold,0,0.000391129,0.00299051,127
+sector,Financials,hold,0,0.00153701,0.00127624,127
+sector,Health Care,hold,0,0.00125894,0.00212402,127
+sector,Industrials,hold,0,-0.00130418,0.00130441,127
+sector,Real Estate,hold,0,0.00286365,0.00186554,127
+sector,Technology,hold,0,0.00104414,0.00214974,127
+sector,Telecommunications,hold,0,0.00443211,0.00272289,127
+sector,Utilities,hold,0,-0.00274883,0.00174084,127
+sector,All stocks (equal weight),hold,0,0.000339735,0.000764349,127
+sector,Basic Materials,hold,1,-0.00234266,0.00341454,127
+sector,Consumer Discretionary,hold,1,0.00103033,0.00193338,127
+sector,Consumer Staples,hold,1,-0.00112758,0.00142587,127
+sector,Energy,hold,1,-6.6628e-05,0.00287753,127
+sector,Financials,hold,1,0.00183901,0.0013851,127
+sector,Health Care,hold,1,0.00162909,0.00228587,127
+sector,Industrials,hold,1,-0.00144713,0.00142182,127
+sector,Real Estate,hold,1,0.002221,0.00209675,127
+sector,Technology,hold,1,-0.000265661,0.00235705,127
+sector,Telecommunications,hold,1,0.0042142,0.00277469,127
+sector,Utilities,hold,1,-0.00374054,0.00183915,127
+sector,All stocks (equal weight),hold,1,0.000223623,0.000833953,127
+sector,Basic Materials,hold,2,-0.000756523,0.00358532,127
+sector,Consumer Discretionary,hold,2,0.000191656,0.00199879,127
+sector,Consumer Staples,hold,2,-0.00143455,0.00141404,127
+sector,Energy,hold,2,0.000713178,0.00305466,127
+sector,Financials,hold,2,0.00107784,0.00135187,127
+sector,Health Care,hold,2,0.00103248,0.00232194,127
+sector,Industrials,hold,2,-0.00270584,0.00151505,127
+sector,Real Estate,hold,2,-0.000459773,0.00220252,127
+sector,Technology,hold,2,-0.000510286,0.00256883,127
+sector,Telecommunications,hold,2,0.0016198,0.00273445,127
+sector,Utilities,hold,2,-0.00498296,0.00195367,127
+sector,All stocks (equal weight),hold,2,-0.000552785,0.000804804,127
+sector,Basic Materials,hold,3,-0.00246577,0.0036182,127
+sector,Consumer Discretionary,hold,3,3.81123e-05,0.00210684,127
+sector,Consumer Staples,hold,3,-0.000767261,0.00151388,127
+sector,Energy,hold,3,0.000420867,0.00343384,127
+sector,Financials,hold,3,0.000551595,0.00141649,127
+sector,Health Care,hold,3,0.00116768,0.00246812,127
+sector,Industrials,hold,3,-0.0030433,0.00163816,127
+sector,Real Estate,hold,3,-0.000863691,0.00229618,127
+sector,Technology,hold,3,-0.000517297,0.00269161,127
+sector,Telecommunications,hold,3,0.00159174,0.00300731,127
+sector,Utilities,hold,3,-0.00558963,0.00211047,127
+sector,All stocks (equal weight),hold,3,-0.000862587,0.000888653,127
+sector,Basic Materials,hold,4,-0.00123405,0.00400535,127
+sector,Consumer Discretionary,hold,4,0.000252821,0.00211597,127
+sector,Consumer Staples,hold,4,-0.00054287,0.00166736,127
+sector,Energy,hold,4,0.000813944,0.00384721,127
+sector,Financials,hold,4,0.000841197,0.00160036,127
+sector,Health Care,hold,4,0.00156051,0.00250781,127
+sector,Industrials,hold,4,-0.00298532,0.00172942,127
+sector,Real Estate,hold,4,-0.000188621,0.00257551,127
+sector,Technology,hold,4,-0.00123769,0.00294708,127
+sector,Telecommunications,hold,4,0.000533871,0.00323195,127
+sector,Utilities,hold,4,-0.00473957,0.00224924,127
+sector,All stocks (equal weight),hold,4,-0.000583127,0.000955396,127
+sector,Basic Materials,hold,5,-0.000698574,0.00429521,127
+sector,Consumer Discretionary,hold,5,0.000622531,0.0021732,127
+sector,Consumer Staples,hold,5,0.000230233,0.00187924,127
+sector,Energy,hold,5,0.00204304,0.00435714,127
+sector,Financials,hold,5,0.00172938,0.00172587,127
+sector,Health Care,hold,5,0.00177508,0.00264042,127
+sector,Industrials,hold,5,-0.00280966,0.00176947,127
+sector,Real Estate,hold,5,0.000574778,0.00262603,127
+sector,Technology,hold,5,-0.000691788,0.00316044,127
+sector,Telecommunications,hold,5,-3.11591e-05,0.00350049,127
+sector,Utilities,hold,5,-0.0050372,0.00262009,127
+sector,All stocks (equal weight),hold,5,-7.41325e-05,0.000983191,127
