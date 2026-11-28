@@ -1,0 +1,122 @@
+sector_a,sector_b,correlation
+Basic Materials,Basic Materials,1
+Basic Materials,Consumer Discretionary,0.456588
+Basic Materials,Consumer Staples,0.379768
+Basic Materials,Energy,0.466525
+Basic Materials,Financials,0.589057
+Basic Materials,Health Care,0.298358
+Basic Materials,Industrials,0.588192
+Basic Materials,Real Estate,0.379293
+Basic Materials,Technology,0.338468
+Basic Materials,Telecommunications,0.337178
+Basic Materials,Utilities,0.3111
+Consumer Discretionary,Basic Materials,0.456588
+Consumer Discretionary,Consumer Discretionary,1
+Consumer Discretionary,Consumer Staples,0.66037
+Consumer Discretionary,Energy,0.409677
+Consumer Discretionary,Financials,0.820285
+Consumer Discretionary,Health Care,0.466816
+Consumer Discretionary,Industrials,0.787083
+Consumer Discretionary,Real Estate,0.662548
+Consumer Discretionary,Technology,0.603545
+Consumer Discretionary,Telecommunications,0.535253
+Consumer Discretionary,Utilities,0.451191
+Consumer Staples,Basic Materials,0.379768
+Consumer Staples,Consumer Discretionary,0.66037
+Consumer Staples,Consumer Staples,1
+Consumer Staples,Energy,0.390764
+Consumer Staples,Financials,0.635058
+Consumer Staples,Health Care,0.579299
+Consumer Staples,Industrials,0.624191
+Consumer Staples,Real Estate,0.534445
+Consumer Staples,Technology,0.494451
+Consumer Staples,Telecommunications,0.551591
+Consumer Staples,Utilities,0.571469
+Energy,Basic Materials,0.466525
+Energy,Consumer Discretionary,0.409677
+Energy,Consumer Staples,0.390764
+Energy,Energy,1
+Energy,Financials,0.509772
+Energy,Health Care,0.322254
+Energy,Industrials,0.471488
+Energy,Real Estate,0.285644
+Energy,Technology,0.275333
+Energy,Telecommunications,0.398551
+Energy,Utilities,0.30731
+Financials,Basic Materials,0.589057
+Financials,Consumer Discretionary,0.820285
+Financials,Consumer Staples,0.635058
+Financials,Energy,0.509772
+Financials,Financials,1
+Financials,Health Care,0.487912
+Financials,Industrials,0.825751
+Financials,Real Estate,0.659072
+Financials,Technology,0.611436
+Financials,Telecommunications,0.569387
+Financials,Utilities,0.472204
+Health Care,Basic Materials,0.298358
+Health Care,Consumer Discretionary,0.466816
+Health Care,Consumer Staples,0.579299
+Health Care,Energy,0.322254
+Health Care,Financials,0.487912
+Health Care,Health Care,1
+Health Care,Industrials,0.524375
+Health Care,Real Estate,0.392521
+Health Care,Technology,0.446972
+Health Care,Telecommunications,0.412015
+Health Care,Utilities,0.444434
+Industrials,Basic Materials,0.588192
+Industrials,Consumer Discretionary,0.787083
+Industrials,Consumer Staples,0.624191
+Industrials,Energy,0.471488
+Industrials,Financials,0.825751
+Industrials,Health Care,0.524375
+Industrials,Industrials,1
+Industrials,Real Estate,0.60154
+Industrials,Technology,0.640957
+Industrials,Telecommunications,0.496627
+Industrials,Utilities,0.467227
+Real Estate,Basic Materials,0.379293
+Real Estate,Consumer Discretionary,0.662548
+Real Estate,Consumer Staples,0.534445
+Real Estate,Energy,0.285644
+Real Estate,Financials,0.659072
+Real Estate,Health Care,0.392521
+Real Estate,Industrials,0.60154
+Real Estate,Real Estate,1
+Real Estate,Technology,0.473747
+Real Estate,Telecommunications,0.454939
+Real Estate,Utilities,0.499345
+Technology,Basic Materials,0.338468
+Technology,Consumer Discretionary,0.603545
+Technology,Consumer Staples,0.494451
+Technology,Energy,0.275333
+Technology,Financials,0.611436
+Technology,Health Care,0.446972
+Technology,Industrials,0.640957
+Technology,Real Estate,0.473747
+Technology,Technology,1
+Technology,Telecommunications,0.379109
+Technology,Utilities,0.401392
+Telecommunications,Basic Materials,0.337178
+Telecommunications,Consumer Discretionary,0.535253
+Telecommunications,Consumer Staples,0.551591
+Telecommunications,Energy,0.398551
+Telecommunications,Financials,0.569387
+Telecommunications,Health Care,0.412015
+Telecommunications,Industrials,0.496627
+Telecommunications,Real Estate,0.454939
+Telecommunications,Technology,0.379109
+Telecommunications,Telecommunications,1
+Telecommunications,Utilities,0.463709
+Utilities,Basic Materials,0.3111
+Utilities,Consumer Discretionary,0.451191
+Utilities,Consumer Staples,0.571469
+Utilities,Energy,0.30731
+Utilities,Financials,0.472204
+Utilities,Health Care,0.444434
+Utilities,Industrials,0.467227
+Utilities,Real Estate,0.499345
+Utilities,Technology,0.401392
+Utilities,Telecommunications,0.463709
+Utilities,Utilities,1

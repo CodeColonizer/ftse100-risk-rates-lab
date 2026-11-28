@@ -1,0 +1,22 @@
+{
+  "data_through": "2026-11-26",
+  "built_at_utc": "2026-11-28 01:38",
+  "n_stocks": 100,
+  "n_decisions_total": 164,
+  "n_decisions_analysed": 153,
+  "bank_rate_now_pct": 4.0,
+  "last_decision": {
+    "date": "2026-11-05",
+    "decision": "hike",
+    "new_rate_pct": 4.0
+  },
+  "quality": {
+    "checks": 40,
+    "passed": 33,
+    "for_review": 7,
+    "failed": 0
+  },
+  "start_date": "2010-01-01",
+  "fdr_level": 0.1,
+  "placebo_draws": 2000
+}

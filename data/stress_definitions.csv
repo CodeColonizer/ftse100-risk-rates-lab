@@ -1,0 +1,4 @@
+period,label,base_date,end_date,why
+covid_crash,Covid crash,2020-02-19,2020-03-23,From the last close before the global sell-off accelerated (19 Feb 2020) to the FTSE 100's lowest close of 2020 (23 Mar 2020).
+hikes_2022,2022 rate hikes,2021-12-31,2022-12-30,"Calendar year 2022, in which the MPC raised Bank Rate at 8 meetings, from 0.25% to 3.5%."
+mini_budget,Sept 2022 mini-budget,2022-09-22,2022-10-14,"From the close before the 23 Sep 2022 fiscal statement to 14 Oct 2022, when the Chancellor was replaced and the Bank's emergency gilt buying ended."
